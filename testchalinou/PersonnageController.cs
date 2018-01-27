@@ -74,6 +74,9 @@ public class PersonnageController : MonoBehaviour {
 			model.anim.Play ("Idle");
 		}
 			
+		if (Input.GetKey (KeyCode.UpArrow)) { 
+			this.throwPower ();
+		}
 		if (Input.GetButton(buttonX) ) {
 			this.throwPower ();
 		}
@@ -137,12 +140,11 @@ public class PersonnageController : MonoBehaviour {
     
 		if(model.hasBonus){
 			model.power.direction = (int) transform.localScale.x;
-			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
+			Vector3 instantiatePosition = new Vector3(gameObject.name == "Joueur1" ? model.shootPoint.position.x+5 : model.shootPoint.position.x-5, model.shootPoint.position.y, model.shootPoint.position.z);
+			Instantiate (model.power, instantiatePosition, model.shootPoint.rotation);
 			model.power 	= null;
-
 			model.hasBonus 	= false;
-
-			}
+		}
 	}
 
 	void shoot(){
@@ -153,11 +155,8 @@ public class PersonnageController : MonoBehaviour {
 			if(Time.time > model.timeToFire){
 				model.timeToFire = Time.time + 1 / model.fireRate;
 				this.instatiateTir();
-
 			}
 		}
-			
-
 	}
 
 	void endShoot(){
@@ -189,7 +188,6 @@ public class PersonnageController : MonoBehaviour {
 		Debug.Log("eee");
 		Debug.Log("colision enter 2d");
 		if (other.gameObject.tag == "Bonus"){
-
 			pickUpBonus();
 		}else if(other.gameObject.tag == "Vide"){
 			tombeDansLeVide();
