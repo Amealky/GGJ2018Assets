@@ -15,6 +15,8 @@ public class PersonnageModel : MonoBehaviour {
 	public bool isMoving;
 	public SpriteRenderer sprite;
 	public Transform shootPoint;
+	//Zak
+	//Zak
 
 
 }
