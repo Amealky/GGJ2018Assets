@@ -24,7 +24,7 @@ public class PersonnageController : MonoBehaviour {
 		model.shootPoint = transform.Find ("ShootPoint");
 		// model.power = this.gameObject.GetComponent<Power> ();
 
-		model.power = this.gameObject.GetComponent<Power> ();
+		model.power = this.gameObject.GetComponent<BonusThrowedScript> ();
 		model.tir = this.gameObject.GetComponent<Tir> ();
 
 
@@ -135,12 +135,14 @@ public class PersonnageController : MonoBehaviour {
 
 	void throwPower(){
     
-		//if(model.hasBonus){
+		if(model.hasBonus){
 			model.power.direction = (int) transform.localScale.x;
 			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
 			model.power 	= null;
+
 			model.hasBonus 	= false;
-		//	}
+
+			}
 	}
 
 	void shoot(){
@@ -187,6 +189,7 @@ public class PersonnageController : MonoBehaviour {
 		Debug.Log("eee");
 		Debug.Log("colision enter 2d");
 		if (other.gameObject.tag == "Bonus"){
+
 			pickUpBonus();
 		}else if(other.gameObject.tag == "Vide"){
 			tombeDansLeVide();
