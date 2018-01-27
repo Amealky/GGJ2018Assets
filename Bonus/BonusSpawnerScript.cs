@@ -36,6 +36,7 @@ public class BonusSpawnerScript : MonoBehaviour {
 	private void spawnobjectS(){
 		lastSpawnTime = Mathf.RoundToInt( Time.time );
 		Instantiate (bonusObject, this.getRandomSpawnPoint(true) ,  Quaternion.identity );
+		Instantiate (bonusObject, this.getRandomSpawnPoint(false) ,  Quaternion.identity );
 	}
 
 	private Vector3 getRandomSpawnPoint(bool leftTeam){
