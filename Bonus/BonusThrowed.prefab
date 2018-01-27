@@ -89,10 +89,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  speedAffection: 0
+  speedAffection: 2
   isMalus: 0
   isBonus: 1
-  direction: -10
+  direction: 10
 --- !u!212 &212261260934612078
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -124,7 +124,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 0dddc0c23fa0f284a9d66865c1712d44, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ad14cd76ebdf4984b9f42f26984f5317, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

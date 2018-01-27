@@ -24,6 +24,7 @@ public class PersonnageController : MonoBehaviour {
 
     void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
+		model.tir = this.gameObject.GetComponent<Tir> ();
 	}
 
 	// Use this for initialization
@@ -34,7 +35,7 @@ public class PersonnageController : MonoBehaviour {
 		// model.power = this.gameObject.GetComponent<Power> ();
 
 		model.power = this.gameObject.GetComponent<BonusThrowedScript> ();
-		model.tir = this.gameObject.GetComponent<Tir> ();
+
 
 
 		horizontalAxis = "J" + model.numeroJoueur + "Horizontal";

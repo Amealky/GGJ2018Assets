@@ -119,8 +119,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1c93e3f868cb44a9653b201228e11e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: -10
-  speed: 10
+  direction: 10
+  speed: 20
   bulletDamage: 5
 --- !u!198 &198154337376211800
 ParticleSystem:
