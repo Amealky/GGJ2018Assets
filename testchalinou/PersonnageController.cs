@@ -34,7 +34,7 @@ public class PersonnageController : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.LeftArrow)) {
 			transform.Translate (new Vector3 (-translation, 0, 0));
-			//model.sprite.flipX = true;
+
 			Vector3 newScale = transform.localScale;
 			newScale.x *= -newScale.x;
 			transform.localScale = newScale;
@@ -42,7 +42,6 @@ public class PersonnageController : MonoBehaviour {
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			transform.Translate (new Vector3 (translation, 0, 0));
 
-			//model.sprite.flipX = false;
 			Vector3 newScale = transform.localScale;
 			newScale.x *= newScale.x;
 			transform.localScale = newScale;
@@ -68,5 +67,5 @@ public class PersonnageController : MonoBehaviour {
 		}
 	}
 		
-
+	
 }
