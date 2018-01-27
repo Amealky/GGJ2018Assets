@@ -18,6 +18,7 @@ public class BonusScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
     	if (other.gameObject.tag == "Player"){
+			bonusThrowed.speedAffection = speed;
 			other.gameObject.GetComponent<PersonnageModel> ().power = bonusThrowed;
 
 

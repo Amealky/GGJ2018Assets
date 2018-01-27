@@ -144,6 +144,7 @@ public class PersonnageController : MonoBehaviour {
 			Instantiate (model.power, instantiatePosition, model.shootPoint.rotation);
 			model.power 	= null;
 			model.hasBonus 	= false;
+			model.moveSpeed -= model.speedAffection;
 		}
 	}
 
@@ -189,8 +190,18 @@ public class PersonnageController : MonoBehaviour {
 		Debug.Log("colision enter 2d");
 		if (other.gameObject.tag == "Bonus"){
 			pickUpBonus();
+			model.speedAffection = other.GetComponent<BonusScript> ().speed;
+			applyEffect ();
 		}else if(other.gameObject.tag == "Vide"){
 			tombeDansLeVide();
+		}
+
+		if (other.gameObject.tag == "BonusThrowed") {
+			Debug.Log ("ThrowedTag");
+			model.hasMalus = true;
+			model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
+			applyEffect ();
+			Destroy (other.gameObject);
 		}
 
 
@@ -210,6 +221,55 @@ public class PersonnageController : MonoBehaviour {
 	void pickUpBonus(){
 		model.hasBonus = true;
 	}
+
+	IEnumerator LoadChangeBonusToMalus(float temps){
+		yield return new WaitForSeconds (temps);
+		if (model.hasBonus) {
+			youAreFucked ();
+		}
+
+
+	}
+
+	IEnumerator LoadEndMalus(float temps){
+		yield return new WaitForSeconds (temps);
+		model.hasMalus = false;
+		applyEffect ();
+
+	}
+
+	void applyEffect(){
+		if (model.hasBonus) {
+			model.moveSpeed += model.speedAffection;
+			StartCoroutine (LoadChangeBonusToMalus (5.0f));
+			model.sprite.color = Color.green;
+			Debug.Log ("Bonus");
+		} 
+
+		if(model.hasMalus){
+			model.moveSpeed -= model.speedAffection;
+			StartCoroutine (LoadEndMalus (5.0f));
+			model.sprite.color = Color.red;
+			Debug.Log ("Malus");
+		}
+
+		if (!model.hasMalus && !model.hasBonus) {
+			model.moveSpeed = model.speedBase;
+			Debug.Log ("Fin de malus");
+			model.sprite.color = Color.white;
+		}
+
+
+	}
+
+	void youAreFucked(){
+		model.hasBonus = false;
+		model.hasMalus = true;
+		model.speedAffection *= 2;
+		model.power = null;
+		applyEffect ();
+	}
+		
 
 
 	public PersonnageModel getModel(){
