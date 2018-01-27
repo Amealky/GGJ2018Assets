@@ -90,7 +90,7 @@ public class PersonnageController : MonoBehaviour {
 			float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
 
 			//transform.position = transform.position + inputDirection;
-	
+			transform.Translate(speed, 0, 0);
 
 		}
 
@@ -100,6 +100,30 @@ public class PersonnageController : MonoBehaviour {
 			transform.position = transform.position + inputDirection;
 
 		}
+
+		if (Input.GetKey (KeyCode.LeftArrow)) { 
+			transform.Translate (new Vector3 (-translation, 0, 0)); 
+			//model.sprite.flipX = true; 
+			Vector3 newScale = transform.localScale; 
+			newScale.x *= -newScale.x; 
+			transform.localScale = newScale; 
+
+		} else if (Input.GetKey (KeyCode.RightArrow)) { 
+			transform.Translate (new Vector3 (translation, 0, 0)); 
+
+			//model.sprite.flipX = false; 
+			Vector3 newScale = transform.localScale; 
+			newScale.x *= newScale.x; 
+			transform.localScale = newScale; 
+
+
+		}  
+
+		if (Input.GetKey (KeyCode.UpArrow)) { 
+			transform.Translate (new Vector3 (0, translation, 0)); 
+		} else if (Input.GetKey (KeyCode.DownArrow)) { 
+			transform.Translate (new Vector3 (0, -translation, 0)); 
+		} 
 
 		//Zak
 		//Zak	
