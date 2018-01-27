@@ -10,6 +10,11 @@ public class Joueur : MonoBehaviour
     public float pourcentage;
 
     float slowTime;
+
+    public AudioClip Degats;
+    private AudioSource source;
+    private float volumecourtedistance= .5f;
+    private float volumelonguedistance= 1.0f;
     // Use this for initialization
     void Start()
     {
@@ -18,6 +23,7 @@ public class Joueur : MonoBehaviour
         vie = 3;
         pourcentage = 0.0f;
 
+        source = GetComponent<AudioSource>();
 
 
     }
@@ -51,6 +57,7 @@ public class Joueur : MonoBehaviour
 
         if (other.gameObject.tag == "VirusSlow")
         {
+            AudioSource.PlayClipAtPoint(Degats, transform.position);
             vitesse = vitesse / 2;
             modifvitesse = true;
             slowTime = (Time.time);
