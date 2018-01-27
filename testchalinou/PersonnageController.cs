@@ -39,6 +39,8 @@ public class PersonnageController : MonoBehaviour {
 		model.shootPoint = transform.Find ("ShootPoint");
 		// model.power = this.gameObject.GetComponent<Power> ();
 
+		model.power = this.gameObject.GetComponent<Power> ();
+		model.tir = this.gameObject.GetComponent<Tir> ();
 		//Zak
 		//Zak
 	}
@@ -64,6 +66,9 @@ public class PersonnageController : MonoBehaviour {
 
 		if (Input.GetKey (KeyCode.Space)) {
 			this.throwPower ();
+		}
+		if (Input.GetKey (KeyCode.V)) {
+			this.shoot ();
 		}
 
 		if (Input.GetKey (KeyCode.LeftArrow)) {
@@ -99,5 +104,22 @@ public class PersonnageController : MonoBehaviour {
 		}
 	}
 
+	void shoot(){
+		if (model.fireRate == 0) {
+			this.instatiateTir ();
+		} else {
+			if(Time.time > model.timeToFire){
+				model.timeToFire = Time.time + 1 / model.fireRate;
+				this.instatiateTir();
+			}
+		}
+	}
+
+	void instatiateTir(){
+		Debug.Log (model.tir);
+		model.tir.direction = (int) transform.localScale.x;
+		Instantiate (model.tir, model.shootPoint.position, model.shootPoint.rotation);
+	}
+		
 	
 }
