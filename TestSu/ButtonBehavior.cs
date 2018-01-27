@@ -6,25 +6,28 @@ using UnityEngine.SceneManagement;
 public class ButtonBehavior : MonoBehaviour {
 
 	private GameObject[] pauseObjects;
+	private bool isActive;
 
 	// Use this for initialization
 	void Start () {
 		Time.timeScale = 1;
 		pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-		hidePaused();
+		StartCoroutine (LoadDelayed (0.1f));
+		isActive = false;
+
 	}
 
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			
-			if (Time.timeScale == 1) {
+			if (isActive) {
 				Time.timeScale = 0;
 				Debug.Log("Temps pausé");
 				showPaused();
 
 
-			} else if (Time.timeScale == 0) {
+			} else if (!isActive) {
 				Time.timeScale = 1;
 				Debug.Log("Temps repris");
 				hidePaused();
@@ -33,29 +36,27 @@ public class ButtonBehavior : MonoBehaviour {
 	}
 
 	public void reprendre(){
-		if (Time.timeScale == 1) {
-			Time.timeScale = 0;
-			showPaused();
-		} else if (Time.timeScale == 0) {
 			Time.timeScale = 1;
 			hidePaused();
-		}
 	}
 
 	public void showPaused(){
 		foreach (GameObject g in pauseObjects) {
-			Debug.Log ("Show");
+			
 			g.SetActive(true);
+			isActive = !isActive;
+			Debug.Log (isActive);
 		}
 	}
 
 	public void hidePaused(){
 		foreach (GameObject g in pauseObjects) {
-			Debug.Log ("Hide");
 			g.SetActive(false);
+			isActive = !isActive;
+			Debug.Log (isActive);
 		}
 	}
-
+				
 	public void LoadLevel(string index){
 		SceneManager.LoadScene(index);
 	}
@@ -63,5 +64,10 @@ public class ButtonBehavior : MonoBehaviour {
 	public void QuitButton(){
 		Debug.Log("Quit");
 		Application.Quit();
+	}
+
+	IEnumerator LoadDelayed(float temps){
+		yield return new WaitForSeconds (temps);
+		hidePaused ();
 	}
 }
