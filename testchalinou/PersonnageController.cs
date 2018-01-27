@@ -190,6 +190,10 @@ public class PersonnageController : MonoBehaviour {
 		model.hasBonus = true;
 	}
 
+
+	PersonnageModel getModel(){
+		return this.model;
+	}
 	//Zak
 	
 }
