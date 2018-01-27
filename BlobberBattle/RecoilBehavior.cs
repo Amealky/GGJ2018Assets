@@ -28,7 +28,7 @@ public class RecoilBehavior : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
-		BulletBehavior shot = collider.gameObject.GetComponent<BulletBehavior> ();
+		Tir shot = collider.gameObject.GetComponent<Tir> ();
 		if (shot != null) { // Si l'objet qui le touche contient le scrip BulletBehavior
 			pourcentage+=shot.bulletDamage; // On augmente les pourcentages du nombre de dégat de la balle
 			isShot = true; // On déclare que le joueur se fait toucher.

@@ -6,7 +6,7 @@ public class Tir : MonoBehaviour {
 
 	public int direction;
 	public float speed;
-
+	public float bulletDamage;
 	// Use this for initialization
 	void Start () {
 		
@@ -21,4 +21,11 @@ public class Tir : MonoBehaviour {
 
 		
 	}
+
+	void OnTriggerEnter2D(Collider2D collider){
+		if (collider.gameObject.tag == "Player") {
+			Destroy (gameObject);
+		}
+	}
+
 }

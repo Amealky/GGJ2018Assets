@@ -41,7 +41,16 @@ public class PersonnageController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		model.deltime = Time.time;
+		if ((model.deltime - model.timeSaved) > model.animationTime){
+			model.isShot = false;
+		}
+		if (model.isShot) {
+			model.valRecul = (model.recul*model.percentage) * (int) transform.localScale.x;
+			Vector2 temp = new Vector2 (transform.position.x-model.valRecul,transform.position.y); // On fait un vecteur qui le déplace vers la gauche
+			transform.position = Vector2.Lerp (transform.position, temp,Time.fixedDeltaTime);
 
+		}
 	/*	model.hasMalus = true;
 
 		// float translation = model.hasBonus ?  Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed ) : ( Time.deltaTime * model.moveSpeed ) ;
@@ -96,7 +105,7 @@ public class PersonnageController : MonoBehaviour {
 			model.isMoving = false;
 		}
 
-		if (Input.GetKey (KeyCode.LeftArrow)) { 
+		/*if (Input.GetKey (KeyCode.LeftArrow)) { 
 			transform.Translate (new Vector3 (-translation, 0, 0)); 
 			//model.sprite.flipX = true; 
 			Vector3 newScale = transform.localScale; 
@@ -118,7 +127,7 @@ public class PersonnageController : MonoBehaviour {
 			transform.Translate (new Vector3 (0, translation, 0)); 
 		} else if (Input.GetKey (KeyCode.DownArrow)) { 
 			transform.Translate (new Vector3 (0, -translation, 0)); 
-		} 
+		} */
 
 		//Zak
 		//Zak	
@@ -155,7 +164,7 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void instatiateTir(){
-		Debug.Log (model.tir);
+		//Debug.Log (model.tir);
 		model.tir.direction = (int) transform.localScale.x;
 		Instantiate (model.tir, model.shootPoint.position, model.shootPoint.rotation);
 	}
@@ -182,6 +191,15 @@ public class PersonnageController : MonoBehaviour {
 			pickUpBonus();
 		}else if(other.gameObject.tag == "Vide"){
 			tombeDansLeVide();
+		}
+
+
+		Tir shot = other.gameObject.GetComponent<Tir> ();
+		if (shot != null) { // Si l'objet qui le touche contient le scrip BulletBehavior
+			
+			model.percentage+=shot.bulletDamage; // On augmente les pourcentages du nombre de dégat de la balle
+			model.isShot = true; // On déclare que le joueur se fait toucher.
+			model.timeSaved = Time.time;
 		}
 	}
 

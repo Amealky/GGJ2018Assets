@@ -8,7 +8,7 @@ public class PersonnageModel : MonoBehaviour {
 	/*public float bonusMooveSpeed;
 	public float malusMooveSpeed;*/
 	//Zak
-	public float percentage;
+	public float percentage = 1;
 	public float attackSpeed;
 	public float moveSpeed;
 	public int life;
@@ -25,6 +25,13 @@ public class PersonnageModel : MonoBehaviour {
 	public bool hasBonus = false;
 	public bool hasMalus = false;
 	public Animator anim { get; set; }
+
+	public float recul = 0.5f;
+	public bool isShot = false;
+	public float valRecul = 0.1f ;
+	public float timeSaved { get; set;}
+	public float deltime { get; set;}
+	public float animationTime = 0.5f;
 
 	public float numeroJoueur = 1;
 
