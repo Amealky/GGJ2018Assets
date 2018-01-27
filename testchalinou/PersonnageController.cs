@@ -98,7 +98,6 @@ public class PersonnageController : MonoBehaviour {
 			Vector3 inputDirection = Vector3.zero;
 			inputDirection.y = -(Input.GetAxis (verticalAxis) * model.moveSpeed);
 			transform.position = transform.position + inputDirection;
-
 		}
 
 		if (Input.GetKey (KeyCode.LeftArrow)) { 
@@ -170,6 +169,5 @@ public class PersonnageController : MonoBehaviour {
 		transform.localScale = newScale;
 	}
 		
-
 	
 }
