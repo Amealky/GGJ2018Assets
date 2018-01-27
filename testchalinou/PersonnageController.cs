@@ -11,26 +11,7 @@ public class PersonnageController : MonoBehaviour {
 	private string triggerAxis;
 	
 
-	//Zak
-    void OnTriggerEnter2D(Collider2D other) {
-    	Debug.Log("eee");
-    	Debug.Log("colision enter 2d");
-    	if (other.gameObject.tag == "Bonus"){
-    		pickUpBonus();
-	    }else if(other.gameObject.tag == "Vide"){
-	    	tombeDansLeVide();
-    	}
-    }
 
-    void tombeDansLeVide(){
-    	Destroy(gameObject);
-    }
-
-	void pickUpBonus(){
-    	model.hasBonus = true;
-	}
-
-	//Zak
 	
 	void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
@@ -46,16 +27,13 @@ public class PersonnageController : MonoBehaviour {
 		model.power = this.gameObject.GetComponent<Power> ();
 		model.tir = this.gameObject.GetComponent<Tir> ();
 
-		/*	private string horizontalAxis;
-	private string verticalAxis;
-	private string buttonX;
-	private string triggerAxis;*/
+
 		horizontalAxis = "J" + model.numeroJoueur + "Horizontal";
 		verticalAxis = "J" + model.numeroJoueur + "Vertical";
 		buttonX = "J" + model.numeroJoueur + "X";
 		triggerAxis = "J" + model.numeroJoueur + "Trigger"; 
 
-
+		model.anim = this.gameObject.GetComponent<Animator> ();
 		//Zak
 		//Zak
 	}
@@ -77,27 +55,43 @@ public class PersonnageController : MonoBehaviour {
 			translation = Time.deltaTime * ( model.moveSpeed + Random.Range(-10, 15) );
 			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
 		}
+
+
+		if (model.isMoving && !model.isAttacking) {
+			model.anim.Play ("Marche");
+		} else if(!model.isAttacking) {
+			model.anim.Play ("Idle");
+		}
 			
 		if (Input.GetButton(buttonX) ) {
 			this.throwPower ();
 		}
 		if (Input.GetAxis(triggerAxis) < 0.0) {
-			this.shoot ();
+			//this.shoot ();
+			model.isAttacking = true;
+			model.anim.Play ("Crachat");
 		}
 
 
-		if (Input.GetAxis(horizontalAxis) != 0.0) {
+		if (Input.GetAxis (horizontalAxis) != 0.0) {
 			float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
 
 			//transform.position = transform.position + inputDirection;
-			transform.Translate(speed, 0, 0);
+			transform.Translate (speed, 0, 0);
 
-		}
+			model.isMoving = true;
+
+		} 
 
 		if (Input.GetAxis(verticalAxis) != 0.0) {
 			Vector3 inputDirection = Vector3.zero;
 			inputDirection.y = -(Input.GetAxis (verticalAxis) * model.moveSpeed);
 			transform.position = transform.position + inputDirection;
+			model.isMoving = true;
+		}
+
+		if (Input.GetAxis (verticalAxis) == 0.0 && Input.GetAxis (horizontalAxis) == 0.0) {
+			model.isMoving = false;
 		}
 
 		if (Input.GetKey (KeyCode.LeftArrow)) { 
@@ -141,12 +135,20 @@ public class PersonnageController : MonoBehaviour {
 	void shoot(){
 		if (model.fireRate == 0) {
 			this.instatiateTir ();
+
 		} else {
 			if(Time.time > model.timeToFire){
 				model.timeToFire = Time.time + 1 / model.fireRate;
 				this.instatiateTir();
+
 			}
 		}
+			
+
+	}
+
+	void endShoot(){
+		model.isAttacking = false;
 	}
 
 	void instatiateTir(){
@@ -169,5 +171,25 @@ public class PersonnageController : MonoBehaviour {
 		transform.localScale = newScale;
 	}
 		
+	//Zak
+	void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log("eee");
+		Debug.Log("colision enter 2d");
+		if (other.gameObject.tag == "Bonus"){
+			pickUpBonus();
+		}else if(other.gameObject.tag == "Vide"){
+			tombeDansLeVide();
+		}
+	}
+
+	void tombeDansLeVide(){
+		Destroy(gameObject);
+	}
+
+	void pickUpBonus(){
+		model.hasBonus = true;
+	}
+
+	//Zak
 	
 }
