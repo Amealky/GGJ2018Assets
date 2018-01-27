@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114143733072972936}
   m_Layer: 0
   m_Name: BonusThrowed
-  m_TagString: Bonus
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,7 +91,7 @@ MonoBehaviour:
   speed: 10
   isMalus: 0
   isBonus: 1
-  direction: 1
+  direction: -10
 --- !u!212 &212261260934612078
 SpriteRenderer:
   m_ObjectHideFlags: 1
