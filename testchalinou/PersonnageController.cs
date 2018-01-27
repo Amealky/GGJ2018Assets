@@ -53,7 +53,7 @@ public class PersonnageController : MonoBehaviour {
 		horizontalAxis = "J" + model.numeroJoueur + "Horizontal";
 		verticalAxis = "J" + model.numeroJoueur + "Vertical";
 		buttonX = "J" + model.numeroJoueur + "X";
-		triggerAxis = "J" + model.numeroJoueur + "Trigger";
+		triggerAxis = "J" + model.numeroJoueur + "Trigger"; 
 
 
 		//Zak
@@ -78,39 +78,26 @@ public class PersonnageController : MonoBehaviour {
 			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
 		}
 			
-		if (Input.GetButton("ButtonBSpecialShoot")) {
-			Debug.Log ("BUTTONB");
+		if (Input.GetButton(buttonX) ) {
 			this.throwPower ();
 		}
-		if (Input.GetAxis("TriggerShoot") < 0.0) {
-			Debug.Log ("shoot");
+		if (Input.GetAxis(triggerAxis) < 0.0) {
 			this.shoot ();
 		}
 
 
-
-		if (Input.GetAxis("LeftJoystickX") != 0.0) {
+		if (Input.GetAxis(horizontalAxis) != 0.0) {
 			Vector3 inputDirection = Vector3.zero;
-			inputDirection.x = Input.GetAxis ("LeftJoystickX") * model.moveSpeed;
-			transform.position = transform.position + inputDirection;
-			if (inputDirection.x < 0.0) {
-				this.flipLeft (translation);
-			} else {
-				this.flipRight (translation);
-			}
-		}
-
-		if (Input.GetAxis("LeftJoystickY") != 0.0) {
-			Vector3 inputDirection = Vector3.zero;
-			inputDirection.y = -(Input.GetAxis ("LeftJoystickY") * model.moveSpeed);
+			inputDirection.x = Input.GetAxis (horizontalAxis) * model.moveSpeed;
 			transform.position = transform.position + inputDirection;
 		}
 
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			transform.Translate (new Vector3 (0, translation, 0));
-		} else if (Input.GetKey (KeyCode.DownArrow)) {
-			transform.Translate (new Vector3 (0, -translation, 0));
+		if (Input.GetAxis(verticalAxis) != 0.0) {
+			Vector3 inputDirection = Vector3.zero;
+			inputDirection.y = -(Input.GetAxis (verticalAxis) * model.moveSpeed);
+			transform.position = transform.position + inputDirection;
 		}
+
 		//Zak
 		//Zak	
 	}
