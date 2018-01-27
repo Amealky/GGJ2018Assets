@@ -6,6 +6,7 @@ public class PersonnageModel : MonoBehaviour {
 
 	//Zak
 	public float bonusMooveSpeed;
+	public float malusMooveSpeed;
 	//Zak
 	public float percentage;
 	public float attackSpeed;

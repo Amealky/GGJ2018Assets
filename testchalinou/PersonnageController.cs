@@ -45,10 +45,23 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		model.hasMalus = true;
+		float translation =  Time.deltaTime * model.moveSpeed ;
+		// float translation = model.hasBonus ?  Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed ) : ( Time.deltaTime * model.moveSpeed ) ;
+		if(model.hasBonus && !model.hasMalus){
+			translation = Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed );
+		}else if(!model.hasBonus && model.hasMalus){
+			 translation = Time.deltaTime * ( model.moveSpeed - model.malusMooveSpeed );
+		}else if(!model.hasBonus && !model.hasMalus){
+			 translation = Time.deltaTime * model.moveSpeed;
+		}else if(model.hasBonus && model.hasMalus){
+			// Si le joueur a un bonus ET un malus il devien fouuuu ! Il pete un cable genre il bouge cheloument et tout (cest une idee hein)
+			Debug.Log(Random.value > 0.5f );
+			translation = Time.deltaTime * ( model.moveSpeed + Random.Range(-10, 15) );
+			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
+		}
 
 
-		// float translation =  Time.deltaTime * model.moveSpeed ;
-		float translation = model.hasBonus ?  Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed ) : ( Time.deltaTime * model.moveSpeed ) ;
 		if (Input.GetKey (KeyCode.Space)) {
 			this.throwPower ();
 		}
