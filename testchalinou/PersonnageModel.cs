@@ -5,17 +5,15 @@ using UnityEngine;
 public class PersonnageModel : MonoBehaviour {
 
 	//Zak
-	public float bonusMooveSpeed;
-	public float malusMooveSpeed;
+	/*public float bonusMooveSpeed;
+	public float malusMooveSpeed;*/
 	//Zak
 	public float percentage;
 	public float attackSpeed;
 	public float moveSpeed;
 	public int life;
-	public bool hasBonus { get; set;}
-	public bool hasMalus { get; set;}
 	public bool isShooting { get; set;}
-	public Power power;
+	public BonusThrowedScript power;
 	public Tir tir;
 	public bool isMoving  { get; set;}
 	public bool isAttacking  { get; set;}
@@ -24,6 +22,7 @@ public class PersonnageModel : MonoBehaviour {
 	public float fireRate = 0;
 	public float timeToFire = 0;
 	public float damage = 5;
+	public bool hasBonus = false;
 	public Animator anim { get; set; }
 
 	public float numeroJoueur = 1;
