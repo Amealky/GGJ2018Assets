@@ -1,4 +1,4 @@
-﻿/*using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,19 +31,38 @@ public class HUDScript : MonoBehaviour {
 
 
 	void updateBonusUI(){
-		Player1HasBonus.active = false;
-		Player2HasBonus.active = false;
+		if(GameObject.Find("Joueur1") != null){
+			PersonnageController Script1 = GameObject.Find("Joueur1").GetComponent<PersonnageController>();
+			Player1HasBonus.active = Script1.getModel().hasBonus;
+		}
+		if(GameObject.Find("Joueur2") != null){
+			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
+			Player2HasBonus.active = Script2.getModel().hasBonus;
+		}
 	}
 
 	void updatePercentageUI(){
-		Player1Percentage.GetComponent<UnityEngine.UI.Text>().text = GameObject.Find("Joueur1").GetComponent<PersonnageController>().percentage + "%";
-		Player2Percentage.GetComponent<UnityEngine.UI.Text>().text = GameObject.Find("Joueur1").GetComponent<PersonnageController>().percentage + "%";
+		if(GameObject.Find("Joueur1") != null){
+			PersonnageController Script1 = GameObject.Find("Joueur1").GetComponent<PersonnageController>();
+			Player1Percentage.GetComponent<UnityEngine.UI.Text>().text = Script1.getModel().percentage + "%";
+		}
+	
+		if(GameObject.Find("Joueur2") != null){
+			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
+			Player2Percentage.GetComponent<UnityEngine.UI.Text>().text = Script2.getModel().percentage + "%";
+		}
 	}
 
 	void updateMalusUI(){
-		Player1HasMalus.active = false;
-		Player2HasMalus.active = false;
+		if(GameObject.Find("Joueur1") != null){
+			PersonnageController Script1 = GameObject.Find("Joueur1").GetComponent<PersonnageController>();
+			Player1HasMalus.active = Script1.getModel().hasMalus;
+		}
+	
+		if(GameObject.Find("Joueur2") != null){
+			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
+			Player2HasMalus.active = Script2.getModel().hasMalus;
+		}
 	}
 
 }
-*/

@@ -194,7 +194,7 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 
-	PersonnageModel getModel(){
+	public PersonnageModel getModel(){
 		return this.model;
 	}
 	//Zak
