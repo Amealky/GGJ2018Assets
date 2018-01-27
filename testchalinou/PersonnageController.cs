@@ -11,9 +11,14 @@ public class PersonnageController : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
     	Debug.Log("colision enter 2d");
     	if (other.gameObject.tag == "Bonus"){
-    		model.hasBonus = true;
+    		pickUpBonus();
 	    }
     }
+
+	void pickUpBonus(){
+    	model.hasBonus = true;
+	}
+
 	//Zak
 	
 	void Awake(){
@@ -33,27 +38,26 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float translation = Time.deltaTime * model.moveSpeed;
 
+
+		// float translation =  Time.deltaTime * model.moveSpeed ;
+		float translation = model.hasBonus ?  Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed ) : ( Time.deltaTime * model.moveSpeed ) ;
 		if (Input.GetKey (KeyCode.Space)) {
 			this.throwPower ();
 		}
 
 		if (Input.GetKey (KeyCode.LeftArrow)) {
 			transform.Translate (new Vector3 (-translation, 0, 0));
-
 			Vector3 newScale = transform.localScale;
 			newScale.x *= -newScale.x;
 			transform.localScale = newScale;
 
 		} else if (Input.GetKey (KeyCode.RightArrow)) {
 			transform.Translate (new Vector3 (translation, 0, 0));
-
 			Vector3 newScale = transform.localScale;
 			newScale.x *= newScale.x;
 			transform.localScale = newScale;
-
-
+		
 		} 
 
 		if (Input.GetKey (KeyCode.UpArrow)) {
@@ -62,8 +66,7 @@ public class PersonnageController : MonoBehaviour {
 			transform.Translate (new Vector3 (0, -translation, 0));
 		}
 		//Zak
-		//Zak
-		
+		//Zak	
 	}
 
 	void throwPower(){
@@ -75,7 +78,6 @@ public class PersonnageController : MonoBehaviour {
 			model.hasBonus 	= false;
 		}
 	}
-		
 
 	
 }

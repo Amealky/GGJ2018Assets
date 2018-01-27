@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PersonnageModel : MonoBehaviour {
 
+	//Zak
+	public float bonusMooveSpeed;
+	//Zak
 	public float percentage;
 	public float attackSpeed;
 	public float moveSpeed;
@@ -15,8 +18,6 @@ public class PersonnageModel : MonoBehaviour {
 	public bool isMoving  { get; set;}
 	public SpriteRenderer sprite;
 	public Transform shootPoint;
-	//Zak
-	//Zak
 
 
 }
