@@ -9,11 +9,20 @@ public class PersonnageController : MonoBehaviour {
 	private string verticalAxis;
 	private string buttonX;
 	private string triggerAxis;
-	
 
+    private Vector3 initialPositionJ1 = new Vector3(-117, 77,0);
+    private Vector3 initialPositionJ2 = new Vector3(27, 77, 0);
 
-	
-	void Awake(){
+    public AudioClip tirNormal;
+    public AudioClip degatsNormaux;
+    public AudioClip tirSpeciaux;
+    public AudioClip degatsSpeciaux;
+    public AudioClip Mort;
+    private AudioSource source;
+    private float volumecourtedistance = .5f;
+    private float volumelonguedistance = 1.0f;
+
+    void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
 	}
 
@@ -34,9 +43,13 @@ public class PersonnageController : MonoBehaviour {
 		triggerAxis = "J" + model.numeroJoueur + "Trigger"; 
 
 		model.anim = this.gameObject.GetComponent<Animator> ();
-		//Zak
-		//Zak
-	}
+        //Zak
+        //Zak
+
+        model.life = 3;
+
+        source = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -186,17 +199,44 @@ public class PersonnageController : MonoBehaviour {
 		
 	//Zak
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log("eee");
-		Debug.Log("colision enter 2d");
-		if (other.gameObject.tag == "Bonus"){
-			pickUpBonus();
+
+        if (other.gameObject.tag == "Bonus"){
+			Debug.Log("Bonus ramaser");
+            pickUpBonus();
 			model.speedAffection = other.GetComponent<BonusScript> ().speed;
 			applyEffect ();
-		}else if(other.gameObject.tag == "Vide"){
-			tombeDansLeVide();
 		}
+        if (other.gameObject.tag == "Vide")
+        {
+            Debug.Log("vide!");
+            if (gameObject.name == "Joueur1")
+            {
+                transform.position = initialPositionJ1;
+            }
+            if (gameObject.name == "Joueur2")
+            {
+                transform.position = initialPositionJ2;
+            }
+            model.life--;
+            Debug.Log(gameObject.name + " a:" + model.life);
+        }
 
-		if (other.gameObject.tag == "BonusThrowed") {
+        if (other.gameObject.tag == "Limite")
+        {
+            Debug.Log("bloque gauche");
+        }
+
+        if (other.gameObject.tag == "Mur Haut")
+        {
+            Debug.Log("bloque haut");
+        }
+
+        if (other.gameObject.tag == "Mur Bas")
+        {
+            Debug.Log("bloque bas");
+        }
+
+        if (other.gameObject.tag == "BonusThrowed") {
 			Debug.Log ("ThrowedTag");
 			model.hasMalus = true;
 			model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
