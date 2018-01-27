@@ -87,15 +87,18 @@ public class PersonnageController : MonoBehaviour {
 
 
 		if (Input.GetAxis(horizontalAxis) != 0.0) {
-			Vector3 inputDirection = Vector3.zero;
-			inputDirection.x = Input.GetAxis (horizontalAxis) * model.moveSpeed;
-			transform.position = transform.position + inputDirection;
+			float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+			//transform.position = transform.position + inputDirection;
+	
+
 		}
 
 		if (Input.GetAxis(verticalAxis) != 0.0) {
 			Vector3 inputDirection = Vector3.zero;
 			inputDirection.y = -(Input.GetAxis (verticalAxis) * model.moveSpeed);
 			transform.position = transform.position + inputDirection;
+
 		}
 
 		//Zak
@@ -143,5 +146,6 @@ public class PersonnageController : MonoBehaviour {
 		transform.localScale = newScale;
 	}
 		
+
 	
 }
