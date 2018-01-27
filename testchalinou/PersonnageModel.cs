@@ -12,10 +12,10 @@ public class PersonnageModel : MonoBehaviour {
 	public float attackSpeed;
 	public float moveSpeed;
 	public int life;
-	public bool hasBonus { get; set;}
+	public bool hasBonus;
 	public bool hasMalus { get; set;}
 	public bool isShooting { get; set;}
-	public Power power;
+	public BonusThrowedScript power;
 	public Tir tir;
 	public bool isMoving  { get; set;}
 	public bool isAttacking  { get; set;}

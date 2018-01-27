@@ -89,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
+  bonusThrowed: {fileID: 114143733072972936, guid: 4e978fc76921629468a243d7056e537f,
+    type: 2}
 --- !u!212 &212050121492410802
 SpriteRenderer:
   m_ObjectHideFlags: 1
