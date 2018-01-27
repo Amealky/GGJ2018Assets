@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BonusScript : MonoBehaviour {
 
+	public int speed = 10;
 	// Use this for initialization
 	void Start () {
 		
@@ -17,6 +18,7 @@ public class BonusScript : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
     	if (other.gameObject.tag == "Player"){
     		Destroy(gameObject);
+
 	    }
     }
 }

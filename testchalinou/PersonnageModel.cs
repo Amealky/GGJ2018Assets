@@ -18,11 +18,13 @@ public class PersonnageModel : MonoBehaviour {
 	public Power power;
 	public Tir tir;
 	public bool isMoving  { get; set;}
+	public bool isAttacking  { get; set;}
 	public SpriteRenderer sprite { get; set;}
 	public Transform shootPoint;
 	public float fireRate = 0;
 	public float timeToFire = 0;
 	public float damage = 5;
+	public Animator anim { get; set; }
 
 	public float numeroJoueur = 1;
 
