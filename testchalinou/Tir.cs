@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class jules : MonoBehaviour {
+public class Tir : MonoBehaviour {
+
+	public int direction;
+	public float speed;
 
 	// Use this for initialization
 	void Start () {
@@ -11,6 +14,11 @@ public class jules : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		float xTranslation = Time.deltaTime * speed;
+
+		transform.Translate (new Vector3 (xTranslation * direction, 0, 0));
+
 		
 	}
 }

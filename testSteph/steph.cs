@@ -27,7 +27,7 @@ public class Collision : MonoBehaviour
     {
         if (other.gameObject.tag == "vide")
         {
-            transform.position = new Vector3(-2.5f, 1, 0);
+            transform.position = new Vector3(-5.5f, 0, -11);
             vie--;
         }
     }
