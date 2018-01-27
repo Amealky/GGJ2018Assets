@@ -5,17 +5,22 @@ using UnityEngine;
 public class PersonnageController : MonoBehaviour {
 
 	private PersonnageModel model;
-
+	//Zak
+	//Zak
 	void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
 	}
 
 	// Use this for initialization
+
 	void Start () {
 		model.sprite = this.gameObject.GetComponent<SpriteRenderer> ();
 		model.shootPoint = transform.FindChild ("ShootPoint");
 
 		model.power = this.gameObject.GetComponent<Power> ();
+
+		//Zak
+		//Zak
 	}
 	
 	// Update is called once per frame
@@ -50,7 +55,8 @@ public class PersonnageController : MonoBehaviour {
 		} else if (Input.GetKey (KeyCode.DownArrow)) {
 			transform.Translate (new Vector3 (0, -translation, 0));
 		}
-
+		//Zak
+		//Zak
 		
 	}
 
@@ -61,4 +67,6 @@ public class PersonnageController : MonoBehaviour {
 			model.power = null;
 		}
 	}
+		
+
 }
