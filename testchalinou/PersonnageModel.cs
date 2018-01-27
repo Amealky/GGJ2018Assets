@@ -23,6 +23,7 @@ public class PersonnageModel : MonoBehaviour {
 	public float timeToFire = 0;
 	public float damage = 5;
 	public bool hasBonus = false;
+	public bool hasMalus = false;
 	public Animator anim { get; set; }
 
 	public float numeroJoueur = 1;
