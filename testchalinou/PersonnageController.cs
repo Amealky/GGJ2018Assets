@@ -5,8 +5,17 @@ using UnityEngine;
 public class PersonnageController : MonoBehaviour {
 
 	private PersonnageModel model;
+	
+
 	//Zak
+    void OnTriggerEnter2D(Collider2D other) {
+    	Debug.Log("colision enter 2d");
+    	if (other.gameObject.tag == "Bonus"){
+    		model.hasBonus = true;
+	    }
+    }
 	//Zak
+	
 	void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
 	}
@@ -16,8 +25,7 @@ public class PersonnageController : MonoBehaviour {
 	void Start () {
 		model.sprite = this.gameObject.GetComponent<SpriteRenderer> ();
 		model.shootPoint = transform.FindChild ("ShootPoint");
-
-		model.power = this.gameObject.GetComponent<Power> ();
+		// model.power = this.gameObject.GetComponent<Power> ();
 
 		//Zak
 		//Zak
@@ -25,7 +33,6 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
 		float translation = Time.deltaTime * model.moveSpeed;
 
 		if (Input.GetKey (KeyCode.Space)) {
@@ -60,12 +67,15 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void throwPower(){
-		if (model.power != null) {
+    	Debug.Log("power");
+		if(model.hasBonus){
 			model.power.direction = (int) transform.localScale.x;
 			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
-			model.power = null;
+			// model.power 	= null;
+			model.hasBonus 	= false;
 		}
 	}
 		
+
 	
 }
