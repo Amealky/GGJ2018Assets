@@ -6,13 +6,14 @@ public class BonusSpawnerScript : MonoBehaviour {
 
 	public 	GameObject 	bonusObject ;
 	public 	GameObject 	mapFlor ;
-	private int 		lastSpawnTime 	= 0 ;								 	
-	private int 		spawnCallDown 	= 1 ;
-	private int 		mapTop 			= 0 ;
-	private int 		mapBottom 		= 0;
-	private int 		mapLeft 		= 0 ;
-	private int 		mapRight 		= 0;
-	private int 		mapXMiddle 		= 0;
+	private int 		lastSpawnTime 			= 0 ;								 	
+	private int 		spawnCallDown 			= 1 ;
+	private int 		mapTop 					= 0 ;
+	private int 		mapBottom 				= 0;
+	private int 		mapLeft 				= 0 ;
+	private int 		mapRight 				= 0;
+	private int 		mapXMiddle 				= 0;
+	private int 		delimitationSize 		= 1;
 
 	// Use this for initialization
 	void Start () {
@@ -36,10 +37,11 @@ public class BonusSpawnerScript : MonoBehaviour {
 	private void spawnobjectS(){
 		lastSpawnTime = Mathf.RoundToInt( Time.time );
 		Instantiate (bonusObject, this.getRandomSpawnPoint(true) ,  Quaternion.identity );
+		Instantiate (bonusObject, this.getRandomSpawnPoint(false) ,  Quaternion.identity );
 	}
 
 	private Vector3 getRandomSpawnPoint(bool leftTeam){
-		int spawnPointX = leftTeam ?  Random.Range(mapLeft, mapXMiddle) : Random.Range(mapXMiddle, mapRight) ;
+		int spawnPointX = leftTeam ?  Random.Range(mapLeft, mapXMiddle-delimitationSize) : Random.Range(mapXMiddle+delimitationSize, mapRight) ;
 		int spawnPointY = Random.Range(mapBottom, mapTop);
 		Vector3 spawnPoint = new Vector3( spawnPointX , spawnPointY ,  0  );
 		return spawnPoint;
