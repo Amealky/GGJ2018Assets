@@ -5,6 +5,10 @@ using UnityEngine;
 public class PersonnageController : MonoBehaviour {
 
 	private PersonnageModel model;
+	private string horizontalAxis;
+	private string verticalAxis;
+	private string buttonX;
+	private string triggerAxis;
 	
 
 	//Zak
@@ -41,6 +45,17 @@ public class PersonnageController : MonoBehaviour {
 
 		model.power = this.gameObject.GetComponent<Power> ();
 		model.tir = this.gameObject.GetComponent<Tir> ();
+
+		/*	private string horizontalAxis;
+	private string verticalAxis;
+	private string buttonX;
+	private string triggerAxis;*/
+		horizontalAxis = "J" + model.numeroJoueur + "Horizontal";
+		verticalAxis = "J" + model.numeroJoueur + "Vertical";
+		buttonX = "J" + model.numeroJoueur + "X";
+		triggerAxis = "J" + model.numeroJoueur + "Trigger";
+
+
 		//Zak
 		//Zak
 	}
@@ -62,28 +77,34 @@ public class PersonnageController : MonoBehaviour {
 			translation = Time.deltaTime * ( model.moveSpeed + Random.Range(-10, 15) );
 			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
 		}
-
-
-		if (Input.GetKey (KeyCode.Space)) {
+			
+		if (Input.GetButton("ButtonBSpecialShoot")) {
+			Debug.Log ("BUTTONB");
 			this.throwPower ();
 		}
-		if (Input.GetKey (KeyCode.V)) {
+		if (Input.GetAxis("TriggerShoot") < 0.0) {
+			Debug.Log ("shoot");
 			this.shoot ();
 		}
 
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-			transform.Translate (new Vector3 (-translation, 0, 0));
-			Vector3 newScale = transform.localScale;
-			newScale.x *= -newScale.x;
-			transform.localScale = newScale;
 
-		} else if (Input.GetKey (KeyCode.RightArrow)) {
-			transform.Translate (new Vector3 (translation, 0, 0));
-			Vector3 newScale = transform.localScale;
-			newScale.x *= newScale.x;
-			transform.localScale = newScale;
-		
-		} 
+
+		if (Input.GetAxis("LeftJoystickX") != 0.0) {
+			Vector3 inputDirection = Vector3.zero;
+			inputDirection.x = Input.GetAxis ("LeftJoystickX") * model.moveSpeed;
+			transform.position = transform.position + inputDirection;
+			if (inputDirection.x < 0.0) {
+				this.flipLeft (translation);
+			} else {
+				this.flipRight (translation);
+			}
+		}
+
+		if (Input.GetAxis("LeftJoystickY") != 0.0) {
+			Vector3 inputDirection = Vector3.zero;
+			inputDirection.y = -(Input.GetAxis ("LeftJoystickY") * model.moveSpeed);
+			transform.position = transform.position + inputDirection;
+		}
 
 		if (Input.GetKey (KeyCode.UpArrow)) {
 			transform.Translate (new Vector3 (0, translation, 0));
@@ -95,13 +116,13 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void throwPower(){
-    	Debug.Log("power");
-		if(model.hasBonus){
+    
+		//if(model.hasBonus){
 			model.power.direction = (int) transform.localScale.x;
 			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
-			// model.power 	= null;
+			model.power 	= null;
 			model.hasBonus 	= false;
-		}
+		//	}
 	}
 
 	void shoot(){
@@ -119,6 +140,20 @@ public class PersonnageController : MonoBehaviour {
 		Debug.Log (model.tir);
 		model.tir.direction = (int) transform.localScale.x;
 		Instantiate (model.tir, model.shootPoint.position, model.shootPoint.rotation);
+	}
+
+	void flipRight(float translation){
+		transform.Translate (new Vector3 (translation, 0, 0));
+		Vector3 newScale = transform.localScale;
+		newScale.x *= newScale.x;
+		transform.localScale = newScale;
+	}
+
+	void flipLeft(float translation){
+		transform.Translate (new Vector3 (-translation, 0, 0));
+		Vector3 newScale = transform.localScale;
+		newScale.x *= -newScale.x;
+		transform.localScale = newScale;
 	}
 		
 	
