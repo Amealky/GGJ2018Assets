@@ -66,7 +66,7 @@ public class PersonnageController : MonoBehaviour {
 			translation = Time.deltaTime * ( model.moveSpeed + Random.Range(-10, 15) );
 			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
 		}
-
+*/
 
 		if (model.isMoving && !model.isAttacking) {
 			model.anim.Play ("Marche");
