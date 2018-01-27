@@ -48,9 +48,9 @@ public class HUDScript : MonoBehaviour {
 			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
 			Player2Percentage.GetComponent<UnityEngine.UI.Text>().text = Script2.getModel().percentage + "%";
 			if( lastPercentagePlayer2 != Script2.getModel().percentage ){
-				ShakeUi shakeScript2 = Player1Percentage.GetComponent<ShakeUi>();
+				ShakeUi shakeScript2 = Player2Percentage.GetComponent<ShakeUi>();
 				shakeScript2.ShakeIt(10+(lastPercentagePlayer2/7), 0.5f);
-				lastPercentagePlayer1 = Script2.getModel().percentage; 
+				lastPercentagePlayer2 = Script2.getModel().percentage; 
 			}
 		}
 	}
