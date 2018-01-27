@@ -9,10 +9,17 @@ public class PersonnageController : MonoBehaviour {
 
 	//Zak
     void OnTriggerEnter2D(Collider2D other) {
+    	Debug.Log("eee");
     	Debug.Log("colision enter 2d");
     	if (other.gameObject.tag == "Bonus"){
     		pickUpBonus();
-	    }
+	    }else if(other.gameObject.tag == "Vide"){
+	    	tombeDansLeVide();
+    	}
+    }
+
+    void tombeDansLeVide(){
+    	Destroy(gameObject);
     }
 
 	void pickUpBonus(){
