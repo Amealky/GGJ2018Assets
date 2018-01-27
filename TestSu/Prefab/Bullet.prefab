@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Vec: {x: 0, y: 0}
-  bulletDamage: 0
+  bulletDamage: 2
 --- !u!212 &212151683825424398
 SpriteRenderer:
   m_ObjectHideFlags: 1
