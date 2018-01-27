@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class Joueur : MonoBehaviour
 {
-    float vitesse;
+    public float vitesse;
     bool modifvitesse;
-    private int vie;
+    public int vie;
+    public float pourcentage;
 
+    float slowTime;
     // Use this for initialization
     void Start()
     {
-        vitesse = 10.0f;
+        vitesse = 20.0f;
         modifvitesse = false;
         vie = 3;
+        pourcentage = 0.0f;
+
+
+
     }
 
     // Update is called once per frame
@@ -25,10 +31,15 @@ public class Joueur : MonoBehaviour
         transform.Translate(x, 0, 0);
         transform.Translate(0, y, 0);
 
-        /*if (modifvitesse== true)*/
+        float curentTime = (Time.time);
+        if (modifvitesse== true && ((curentTime - slowTime) > 3))
+        {
+            vitesse = 30;
+            modifvitesse = false;
+        }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerEnter2D (Collider2D other)
     {
         Debug.Log("colision enter 2d");
         if (other.gameObject.tag == "Vide")
@@ -41,16 +52,19 @@ public class Joueur : MonoBehaviour
         if (other.gameObject.tag == "VirusSlow")
         {
             vitesse = vitesse / 2;
-            float curentTime = (Time.time);
-            if ((Time.time) - curentTime > curentTime+5)
-            {
-                vitesse = vitesse * 2;
-            }
+            modifvitesse = true;
+            slowTime = (Time.time);
         }
 
-       /* if (other.gameObject.tag == "Bonus")
+        if (other.gameObject.tag == "Tir normaux")
         {
+            Debug.Log("Dommage pris");
+            Debug.Log("recul");
+        }
 
-        }*/
+        if (other.gameObject.tag == "Bonus")
+         {
+            Debug.Log("BOOST!!!!");
+        }
     }
 }
