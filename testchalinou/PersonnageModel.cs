@@ -24,6 +24,8 @@ public class PersonnageModel : MonoBehaviour {
 	public float timeToFire = 0;
 	public float damage = 5;
 
+	public float numeroJoueur = 1;
+
 
 	//Zak
 	//Zak
