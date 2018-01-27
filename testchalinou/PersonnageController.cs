@@ -24,7 +24,7 @@ public class PersonnageController : MonoBehaviour {
 		model.shootPoint = transform.Find ("ShootPoint");
 		// model.power = this.gameObject.GetComponent<Power> ();
 
-		model.power = this.gameObject.GetComponent<BonusThrowedScript> ();
+		model.power = this.gameObject.GetComponent<Power> ();
 		model.tir = this.gameObject.GetComponent<Tir> ();
 
 
@@ -65,8 +65,8 @@ public class PersonnageController : MonoBehaviour {
 			Debug.Log(Random.value > 0.5f );
 			translation = Time.deltaTime * ( model.moveSpeed + Random.Range(-10, 15) );
 			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
-		}*/
-		float translation =  Time.deltaTime * model.moveSpeed ;
+		}
+
 
 		if (model.isMoving && !model.isAttacking) {
 			model.anim.Play ("Marche");
@@ -134,14 +134,13 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void throwPower(){
-
-		if (model.hasBonus) {
-			model.hasBonus 	= false;
+    
+		//if(model.hasBonus){
 			model.power.direction = (int) transform.localScale.x;
 			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
 			model.power 	= null;
-			//model.hasBonus 	= false;
-		}
+			model.hasBonus 	= false;
+		//	}
 	}
 
 	void shoot(){
