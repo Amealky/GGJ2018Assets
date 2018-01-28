@@ -8,7 +8,7 @@ public class BonusSpawnerScript : MonoBehaviour {
 	public 	GameObject 	bonusObject ;
 	public 	GameObject 	mapFlor ;
 	private int 		lastSpawnTime 			= 0;								 	
-	private int 		spawnCallDown 			= 1;
+	private int 		spawnCallDown 			= 3;
 	private int 		mapTop 					= 0;
 	private int 		mapBottom 				= 0;
 	private int 		mapLeft 				= 0;
@@ -18,7 +18,7 @@ public class BonusSpawnerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		maxBonusOnMap 				= 7;
+		maxBonusOnMap 				= 5;
 		delimitationSize 			= 20;
 		mapFlor 					= GameObject.Find("MapFlor");
 		BoxCollider2D m_Collider 	= mapFlor.GetComponent<BoxCollider2D>();

@@ -154,12 +154,13 @@ public class PersonnageController : MonoBehaviour {
 		if(model.hasBonus){
 			
 			model.power.direction = (int) transform.localScale.x;
-			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
+			Vector3 powerPosition = new Vector3( model.numeroJoueur == 1 ? model.shootPoint.position.x+5 : model.shootPoint.position.x-5  , model.shootPoint.position.y , model.shootPoint.position.z); 
+			Instantiate (model.power, powerPosition, model.shootPoint.rotation);
 			model.power 	= null;
 			model.hasBonus 	= false;
 
 			//applyEffect()
-		//	model.moveSpeed -= model.speedAffection;
+			model.moveSpeed = model.speedBase;
 		}
 
 	}

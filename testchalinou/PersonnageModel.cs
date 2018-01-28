@@ -10,6 +10,7 @@ public class PersonnageModel : MonoBehaviour {
 	public float percentage = 1;
 	public float attackSpeed;
 	public float moveSpeed;
+	public float speedBase = 2f;
 	public int life;
 	public bool hasBonus;
 	public bool hasMalus { get; set;}
@@ -24,12 +25,11 @@ public class PersonnageModel : MonoBehaviour {
 	public float timeToFire = 0;
 	public float damage = 5;
 	public Animator anim { get; set; }
-	public float speedBase = 3.5f;
 	public bool isDying = false;
 	public float timeBeforeGetFucked;
 	public float timeBeforeGetWell;
 
-	public float recul = 0.5f;
+	public float recul = 0.01f;
 	public bool isShot = false;
 	public float valRecul = 0.1f ;
 	public float timeSaved { get; set;}
