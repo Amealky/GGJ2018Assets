@@ -34,6 +34,11 @@ public class PersonnageModel : MonoBehaviour {
 	public float animationTime = 0.5f;
 	public float speedAffection = 0;
 
+	public bool isCollideTop;
+	public bool isCollideBottom;
+	public bool isCollideLeft;
+	public bool isCollideRight;
+
 	public float numeroJoueur = 1;
 
 

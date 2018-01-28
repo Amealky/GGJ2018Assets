@@ -83,71 +83,82 @@ public class PersonnageController : MonoBehaviour {
 */
 
 		if (model.isMoving && !model.isAttacking) {
-			model.anim.Play ("Marche");
+			model.anim.Play ("P" + model.numeroJoueur + "Marche");
 		} else if(!model.isAttacking) {
-			model.anim.Play ("Idle");
+			model.anim.Play ("P"+ model.numeroJoueur + "Idle");
 		}
-			
-		if (Input.GetKey (KeyCode.UpArrow)) { 
-			this.throwPower ();
-		}
+
 		if (Input.GetButton(buttonX) ) {
 			this.throwPower ();
 		}
 		if (Input.GetAxis(triggerAxis) < 0.0) {
 			//this.shoot ();
 			model.isAttacking = true;
-			model.anim.Play ("Crachat");
+			model.anim.Play ("P" + model.numeroJoueur + "Crachat");
 		}
 
 
 		if (Input.GetAxis (horizontalAxis) != 0.0) {
-			float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
 
-			//transform.position = transform.position + inputDirection;
-			transform.Translate (speed, 0, 0);
+			if (model.isCollideRight && Input.GetAxis (horizontalAxis) < 0.0) {
 
-			model.isMoving = true;
+				float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+				//transform.position = transform.position + inputDirection;
+				transform.Translate (speed, 0, 0);
+
+				model.isMoving = true;
+
+			}
+			else if (model.isCollideLeft && Input.GetAxis (horizontalAxis) > 0.0) {
+
+				float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+				//transform.position = transform.position + inputDirection;
+				transform.Translate (speed, 0, 0);
+
+				model.isMoving = true;
+
+			} 
+			else if (!model.isCollideRight && !model.isCollideLeft) {
+				float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+				//transform.position = transform.position + inputDirection;
+				transform.Translate (speed, 0, 0);
+
+				model.isMoving = true;
+			}
+
 
 		} 
 
 		if (Input.GetAxis(verticalAxis) != 0.0) {
-			Vector3 inputDirection = Vector3.zero;
-			inputDirection.y = -(Input.GetAxis (verticalAxis) * model.moveSpeed);
-			transform.position = transform.position + inputDirection;
-			model.isMoving = true;
+
+			if (model.isCollideTop && Input.GetAxis (verticalAxis) > 0.0) {
+				
+				float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
+				transform.Translate (0, -speed, 0);
+
+				model.isMoving = true;
+			}
+			else if (model.isCollideBottom && Input.GetAxis (verticalAxis) < 0.0) {
+
+				float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
+				transform.Translate (0, -speed, 0);
+
+				model.isMoving = true;
+			} else if (!model.isCollideTop && !model.isCollideBottom){
+				float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
+				transform.Translate (0, -speed, 0);
+
+				model.isMoving = true;
+			}
 		}
 
 		if (Input.GetAxis (verticalAxis) == 0.0 && Input.GetAxis (horizontalAxis) == 0.0) {
 			model.isMoving = false;
 		}
-
-		/*if (Input.GetKey (KeyCode.LeftArrow)) { 
-			transform.Translate (new Vector3 (-translation, 0, 0)); 
-			//model.sprite.flipX = true; 
-			Vector3 newScale = transform.localScale; 
-			newScale.x *= -newScale.x; 
-			transform.localScale = newScale; 
-
-		} else if (Input.GetKey (KeyCode.RightArrow)) { 
-			transform.Translate (new Vector3 (translation, 0, 0)); 
-
-			//model.sprite.flipX = false; 
-			Vector3 newScale = transform.localScale; 
-			newScale.x *= newScale.x; 
-			transform.localScale = newScale; 
-
-
-		}  
-
-		if (Input.GetKey (KeyCode.UpArrow)) { 
-			transform.Translate (new Vector3 (0, translation, 0)); 
-		} else if (Input.GetKey (KeyCode.DownArrow)) { 
-			transform.Translate (new Vector3 (0, -translation, 0)); 
-		} */
-
-		//Zak
-		//Zak	
+			
 	}
 
 	void throwPower(){
@@ -166,10 +177,12 @@ public class PersonnageController : MonoBehaviour {
 		if (model.fireRate == 0) {
 			this.instatiateTir ();
 
+
 		} else {
 			if(Time.time > model.timeToFire){
 				model.timeToFire = Time.time + 1 / model.fireRate;
 				this.instatiateTir();
+
 			}
 		}
 	}
@@ -198,6 +211,30 @@ public class PersonnageController : MonoBehaviour {
 		transform.localScale = newScale;
 	}
 		
+
+	void OnTriggerExit2D(Collider2D other){
+
+		if (other.gameObject.tag == "MilieuTerrain")
+		{
+			if (model.numeroJoueur == 1) {
+				model.isCollideRight = false;
+			} else if (model.numeroJoueur == 2) {
+				model.isCollideLeft = false;
+			}
+
+		}
+
+		if (other.gameObject.tag == "MurHaut")
+		{
+			model.isCollideTop = false;
+		}
+
+		if (other.gameObject.tag == "MurBas")
+		{
+			model.isCollideBottom = false;
+		}
+
+	}
 	//Zak
 	void OnTriggerEnter2D(Collider2D other) {
 
@@ -222,19 +259,24 @@ public class PersonnageController : MonoBehaviour {
             Debug.Log(gameObject.name + " a:" + model.life);
         }
 
-        if (other.gameObject.tag == "Limite")
+        if (other.gameObject.tag == "MilieuTerrain")
         {
-            Debug.Log("bloque gauche");
+			if (model.numeroJoueur == 1) {
+				model.isCollideRight = true;
+			} else if (model.numeroJoueur == 2) {
+				model.isCollideLeft = true;
+			}
+
         }
 
-        if (other.gameObject.tag == "Mur Haut")
+        if (other.gameObject.tag == "MurHaut")
         {
-            Debug.Log("bloque haut");
+			model.isCollideTop = true;  
         }
 
-        if (other.gameObject.tag == "Mur Bas")
+        if (other.gameObject.tag == "MurBas")
         {
-            Debug.Log("bloque bas");
+			model.isCollideBottom = true;  
         }
 
         if (other.gameObject.tag == "BonusThrowed") {
