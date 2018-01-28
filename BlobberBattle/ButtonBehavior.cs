@@ -8,12 +8,13 @@ public class ButtonBehavior : MonoBehaviour {
 	private GameObject[] pauseObjects;
 	private bool isActive;
 
+	void Awake() {
+		pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+	}
 	// Use this for initialization
 	void Start () {
 		Time.timeScale = 1;
-		pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-		StartCoroutine (LoadDelayed (0.1f));
-		isActive = false;
+		hidePaused();
 
 	}
 
@@ -64,10 +65,5 @@ public class ButtonBehavior : MonoBehaviour {
 	public void QuitButton(){
 		Debug.Log("Quit");
 		Application.Quit();
-	}
-
-	IEnumerator LoadDelayed(float temps){
-		yield return new WaitForSeconds (temps);
-		hidePaused ();
 	}
 }
