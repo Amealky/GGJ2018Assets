@@ -56,6 +56,7 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		Debug.Log ("model.isDying"+model.isDying);
 		if (!model.isDying) {
 			
 			model.deltime = Time.time;
@@ -77,10 +78,10 @@ public class PersonnageController : MonoBehaviour {
 			}
 
 			if (Input.GetButton (buttonX)) {
-				this.throwPower ();
+				throwPower ();
 			}
 			if (Input.GetAxis (triggerAxis) < 0.0) {
-				this.shoot ();
+				//this.shoot ();
 				model.isAttacking = true;
 				model.anim.Play ("P" + model.numeroJoueur + "Crachat");
 			}
@@ -184,7 +185,7 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void endDie(){
-		model.isDying = false;
+		Debug.Log ("enddie");
 
 		if (gameObject.name == "Joueur1")
 		{
@@ -198,6 +199,7 @@ public class PersonnageController : MonoBehaviour {
 		model.percentage = 0;
 		model.hasBonus = false;
 		model.hasMalus = false;
+		model.isDying = false;
 	}
 	void instatiateTir(){
 		//Debug.Log (model.tir);
@@ -247,70 +249,70 @@ public class PersonnageController : MonoBehaviour {
 	//Zak
 	void OnTriggerEnter2D(Collider2D other) {
 
-        if (other.gameObject.tag == "Bonus"){
-			Debug.Log("Bonus ramaser");
-			if (!model.hasBonus) {
-				pickUpBonus();
-				model.speedAffection = other.GetComponent<BonusScript> ().speed;
-				applyEffect ();
+		if (model.isDying != true ) {
+	        if (other.gameObject.tag == "Bonus"){
+				Debug.Log("Bonus ramaser");
+				if (!model.hasBonus) {
+					pickUpBonus();
+					model.speedAffection = other.GetComponent<BonusScript> ().speed;
+					applyEffect ();
+				}
+	   
 			}
-   
-		}
-        if (other.gameObject.tag == "Vide")
-        {
+
+			if (other.gameObject.tag == "Vide")
+			{
+
+				Debug.Log("vide!");
+				model.anim.Play ("P" + model.numeroJoueur + "Mort");
+				model.isDying = true;
+			}
+			if (model.isDying != true ) {
+
+				if (other.gameObject.tag == "BonusThrowed") {
+
+					model.hasMalus = true;
+					model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
+					applyEffect ();
+					Destroy (other.gameObject);
+
+
+
+				}
+			}
+
+
+	        if (other.gameObject.tag == "MilieuTerrain")
+	        {
+				if (model.numeroJoueur == 1) {
+					model.isCollideRight = true;
+				} else if (model.numeroJoueur == 2) {
+					model.isCollideLeft = true;
+				}
+
+	        }
+
+	        if (other.gameObject.tag == "MurHaut")
+	        {
+				model.isCollideTop = true;  
+	        }
+
+	        if (other.gameObject.tag == "MurBas")
+	        {
+				model.isCollideBottom = true;  
+	        }
+
+
+
+			Tir shot = other.gameObject.GetComponent<Tir> ();
+			if (shot != null) { // Si l'objet qui le touche contient le scrip BulletBehavior
 				
-            Debug.Log("vide!");
-			model.anim.Play ("P" + model.numeroJoueur + "Mort");
-			model.isDying = true;
-		
-            
-        }
+				model.percentage+=shot.bulletDamage; // On augmente les pourcentages du nombre de dégat de la balle
+				model.isShot = true; // On déclare que le joueur se fait toucher.
+				model.timeSaved = Time.time;
 
-        if (other.gameObject.tag == "MilieuTerrain")
-        {
-			if (model.numeroJoueur == 1) {
-				model.isCollideRight = true;
-			} else if (model.numeroJoueur == 2) {
-				model.isCollideLeft = true;
+				model.anim.Play ("P" + model.numeroJoueur + "PrendreUnCoup");
 			}
-
-        }
-
-        if (other.gameObject.tag == "MurHaut")
-        {
-			model.isCollideTop = true;  
-        }
-
-        if (other.gameObject.tag == "MurBas")
-        {
-			model.isCollideBottom = true;  
-        }
-
-		if (!model.isDying) {
-			if (other.gameObject.tag == "BonusThrowed") {
-			
-				
-
-					
-				model.hasMalus = true;
-				model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
-				applyEffect ();
-				Destroy (other.gameObject);
-			
-
-
-			}
-		}
-
-
-		Tir shot = other.gameObject.GetComponent<Tir> ();
-		if (shot != null) { // Si l'objet qui le touche contient le scrip BulletBehavior
-			
-			model.percentage+=shot.bulletDamage; // On augmente les pourcentages du nombre de dégat de la balle
-			model.isShot = true; // On déclare que le joueur se fait toucher.
-			model.timeSaved = Time.time;
-
-			model.anim.Play ("P" + model.numeroJoueur + "PrendreUnCoup");
 		}
 	}
 
@@ -342,21 +344,21 @@ public class PersonnageController : MonoBehaviour {
 		if (model.hasBonus) {
 			model.moveSpeed += model.speedAffection;
 			StartCoroutine (LoadChangeBonusToMalus (model.timeBeforeGetFucked));
-			model.sprite.color = Color.yellow;
+
 			Debug.Log ("Bonus");
 		} 
 
 		if(model.hasMalus){
 			model.moveSpeed -= model.speedAffection;
 			StartCoroutine (LoadEndMalus (model.timeBeforeGetWell));
-			model.sprite.color = Color.green;
+	
 			Debug.Log ("Malus");
 		}
 
 		if (!model.hasMalus && !model.hasBonus) {
 			model.moveSpeed = model.speedBase;
 			Debug.Log ("Fin de malus");
-			model.sprite.color = Color.white;
+		
 		}
 
 
