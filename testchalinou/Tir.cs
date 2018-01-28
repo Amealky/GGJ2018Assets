@@ -15,7 +15,7 @@ public class Tir : MonoBehaviour {
 		speed = 0.25f;
 		bounsCount 	= 0 ;
 		maxBouns 	= 2 ;
-		directionXY = new Vector3(direction, 0, 0);
+		//directionXY = new Vector3(direction, 0, 0);
 	}
 	
 	// Update is called once per frame
