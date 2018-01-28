@@ -9,7 +9,8 @@ public class PersonnageController : MonoBehaviour {
 	private string verticalAxis;
 	private string buttonX;
 	private string triggerAxis;
-
+	private GameObject[] bleuWin;
+	private GameObject[] redWin;
     private Vector3 initialPositionJ1 = new Vector3(-117, 77,0);
     private Vector3 initialPositionJ2 = new Vector3(27, 77, 0);
 
@@ -21,9 +22,12 @@ public class PersonnageController : MonoBehaviour {
     private AudioSource source;
     private float volumecourtedistance = .5f;
     private float volumelonguedistance = 1.0f;
+	private bool isLooser = false;
 
     void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
+		bleuWin = GameObject.FindGameObjectsWithTag("bleuwin");
+		redWin = GameObject.FindGameObjectsWithTag("rougewin");
 		//model.tir = this.gameObject.GetComponent<Tir> ();
 	}
 
@@ -37,8 +41,8 @@ public class PersonnageController : MonoBehaviour {
 		// model.power = this.gameObject.GetComponent<Power> ();
 
 		model.power = this.gameObject.GetComponent<BonusThrowedScript> ();
-
-
+		bleuWin[0].SetActive(false);
+		redWin [0].SetActive (false);
 
 		horizontalAxis = "J" + model.numeroJoueur + "Horizontal";
 		verticalAxis = "J" + model.numeroJoueur + "Vertical";
@@ -56,93 +60,109 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+	
 		Debug.Log ("model.isDying"+model.isDying);
 		if (!model.isDying) {
-			
-			model.deltime = Time.time;
-			if ((model.deltime - model.timeSaved) > model.animationTime) {
-				model.isShot = false;
-			}
-			if (model.isShot) {
-				model.valRecul = (model.recul * model.percentage) * (int)transform.localScale.x;
-				Vector2 temp = new Vector2 (transform.position.x - model.valRecul, transform.position.y); // On fait un vecteur qui le déplace vers la gauche
-				transform.position = Vector2.Lerp (transform.position, temp, Time.fixedDeltaTime);
 
-			}
+			if (model.life == 0) {
+				isLooser = true;
+				if (model.numeroJoueur == 1) {
+					redWin [0].SetActive (true);
+				} else {
+					bleuWin[0].SetActive(true);
 
-
-			if (model.isMoving && !model.isAttacking) {
-				model.anim.Play ("P" + model.numeroJoueur + "Marche");
-			} else if (!model.isAttacking) {
-				model.anim.Play ("P" + model.numeroJoueur + "Idle");
-			}
-
-			if (Input.GetButton (buttonX)) {
-				throwPower ();
-			}
-			if (Input.GetAxis (triggerAxis) < 0.0) {
-				//this.shoot ();
-				model.isAttacking = true;
-				model.anim.Play ("P" + model.numeroJoueur + "Crachat");
-			}
-
-
-			if (Input.GetAxis (horizontalAxis) != 0.0) {
-
-				if (model.isCollideRight && Input.GetAxis (horizontalAxis) < 0.0) {
-
-					float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
-
-					//transform.position = transform.position + inputDirection;
-					transform.Translate (speed, 0, 0);
-
-					model.isMoving = true;
-
-				} else if (model.isCollideLeft && Input.GetAxis (horizontalAxis) > 0.0) {
-
-					float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
-
-					//transform.position = transform.position + inputDirection;
-					transform.Translate (speed, 0, 0);
-
-					model.isMoving = true;
-
-				} else if (!model.isCollideRight && !model.isCollideLeft) {
-					float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
-
-					//transform.position = transform.position + inputDirection;
-					transform.Translate (speed, 0, 0);
-
-					model.isMoving = true;
 				}
 
-
-			} 
-
-			if (Input.GetAxis (verticalAxis) != 0.0) {
-
-				if (model.isCollideTop && Input.GetAxis (verticalAxis) > 0.0) {
+			}
+			if (!isLooser) {
 				
-					float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
-					transform.Translate (0, -speed, 0);
-
-					model.isMoving = true;
-				} else if (model.isCollideBottom && Input.GetAxis (verticalAxis) < 0.0) {
-
-					float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
-					transform.Translate (0, -speed, 0);
-
-					model.isMoving = true;
-				} else if (!model.isCollideTop && !model.isCollideBottom) {
-					float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
-					transform.Translate (0, -speed, 0);
-
-					model.isMoving = true;
+				model.deltime = Time.time;
+				if ((model.deltime - model.timeSaved) > model.animationTime) {
+					model.isShot = false;
 				}
-			}
+				if (model.isShot) {
+					model.valRecul = (model.recul * model.percentage) * (int)transform.localScale.x;
+					Vector2 temp = new Vector2 (transform.position.x - model.valRecul, transform.position.y); // On fait un vecteur qui le déplace vers la gauche
+					transform.position = Vector2.Lerp (transform.position, temp, Time.fixedDeltaTime);
 
-			if (Input.GetAxis (verticalAxis) == 0.0 && Input.GetAxis (horizontalAxis) == 0.0) {
-				model.isMoving = false;
+				}
+
+
+				if (model.isMoving && !model.isAttacking) {
+					model.anim.Play ("P" + model.numeroJoueur + "Marche");
+				} else if (!model.isAttacking) {
+					model.anim.Play ("P" + model.numeroJoueur + "Idle");
+				}
+
+				if (Input.GetButton (buttonX)) {
+					throwPower ();
+				}
+				if (Input.GetAxis (triggerAxis) < 0.0) {
+					//this.shoot ();
+					model.isAttacking = true;
+					model.anim.Play ("P" + model.numeroJoueur + "Crachat");
+				}
+
+
+				if (Input.GetAxis (horizontalAxis) != 0.0) {
+
+					if (model.isCollideRight && Input.GetAxis (horizontalAxis) < 0.0) {
+
+						float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+						//transform.position = transform.position + inputDirection;
+						transform.Translate (speed, 0, 0);
+
+						model.isMoving = true;
+
+					} else if (model.isCollideLeft && Input.GetAxis (horizontalAxis) > 0.0) {
+
+						float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+						//transform.position = transform.position + inputDirection;
+						transform.Translate (speed, 0, 0);
+
+						model.isMoving = true;
+
+					} else if (!model.isCollideRight && !model.isCollideLeft) {
+						float speed = Input.GetAxis (horizontalAxis) * model.moveSpeed;
+
+						//transform.position = transform.position + inputDirection;
+						transform.Translate (speed, 0, 0);
+
+						model.isMoving = true;
+					}
+
+
+				} 
+
+				if (Input.GetAxis (verticalAxis) != 0.0) {
+
+					if (model.isCollideTop && Input.GetAxis (verticalAxis) > 0.0) {
+				
+						float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
+						transform.Translate (0, -speed, 0);
+
+						model.isMoving = true;
+					} else if (model.isCollideBottom && Input.GetAxis (verticalAxis) < 0.0) {
+
+						float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
+						transform.Translate (0, -speed, 0);
+
+						model.isMoving = true;
+					} else if (!model.isCollideTop && !model.isCollideBottom) {
+						float speed = Input.GetAxis (verticalAxis) * model.moveSpeed;
+						transform.Translate (0, -speed, 0);
+
+						model.isMoving = true;
+					}
+				}
+
+				if (Input.GetAxis (verticalAxis) == 0.0 && Input.GetAxis (horizontalAxis) == 0.0) {
+					model.isMoving = false;
+				}
+
 			}
 
 		}
@@ -271,13 +291,14 @@ public class PersonnageController : MonoBehaviour {
 			if (model.isDying != true ) {
 
 				if (other.gameObject.tag == "BonusThrowed") {
-
-					model.hasMalus = true;
-					model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
-					applyEffect ();
-					Destroy (other.gameObject);
-
-
+					if (!model.hasMalus) {
+						model.hasMalus = true;
+						model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
+					
+						applyEffect ();
+						Destroy (other.gameObject);
+					}
+					
 
 				}
 			}
