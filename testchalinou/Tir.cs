@@ -5,25 +5,41 @@ using UnityEngine;
 public class Tir : MonoBehaviour {
 
 	public int direction;
+	public Vector3 directionXY;
 	public float speed;
 	public float bulletDamage;
+	public int 	 bounsCount;
+	public int 	 maxBouns;
 	// Use this for initialization
 	void Start () {
-		
+		speed = 0.5f;
+		bounsCount 	= 0 ;
+		maxBouns 	= 2 ;
+		directionXY = new Vector3(direction, 0, 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
 		float xTranslation = Time.deltaTime * speed;
-
-		transform.Translate (new Vector3 (xTranslation * direction, 0, 0));
-
-		
+		Vector3 newVector = new Vector3 (
+			(Time.deltaTime * speed)+(directionXY.x*speed), 
+			(Time.deltaTime * speed)+(directionXY.y*speed), 
+			0);
+		transform.Translate ( newVector);
 	}
 
 	void OnTriggerEnter2D(Collider2D collider){
 		if (collider.gameObject.tag == "Player") {
+			Destroy (gameObject);
+		}
+		if(collider.gameObject.name == "Mur Gauche" || collider.gameObject.name == "Mur Droite"){
+			directionXY = new Vector3(-directionXY.x , directionXY.y, directionXY.z);
+			bounsCount++;
+		}else if(collider.gameObject.name == "Mur Haut" || collider.gameObject.name == "Mur Bas"){
+			directionXY = new Vector3(directionXY.x , -directionXY.y, directionXY.z);
+			bounsCount++;
+		}
+		if(bounsCount >= maxBouns){
 			Destroy (gameObject);
 		}
 	}
