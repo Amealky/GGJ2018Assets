@@ -11,7 +11,7 @@ public class PersonnageModel : MonoBehaviour {
 	public float attackSpeed;
 	public float moveSpeed;
 	public float speedBase = 2f;
-	public int life;
+	public int life = 3;
 	public bool hasBonus;
 	public bool hasMalus { get; set;}
 	public bool isShooting { get; set;}

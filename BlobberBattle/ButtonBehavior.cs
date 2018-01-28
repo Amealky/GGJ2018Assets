@@ -20,7 +20,7 @@ public class ButtonBehavior : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown (KeyCode.Escape)) {
+		if (Input.GetButton("Pause")) {
 			
 			if (isActive) {
 				Time.timeScale = 0;
@@ -34,6 +34,8 @@ public class ButtonBehavior : MonoBehaviour {
 				hidePaused();
 			}
 		}
+
+	
 	}
 
 	public void reprendre(){
