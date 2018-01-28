@@ -302,10 +302,10 @@ public class PersonnageController : MonoBehaviour {
 			if (model.isDying != true ) {
 
 				if (other.gameObject.tag == "BonusThrowed") {
+					Instantiate (model.impactParticule, transform.position, transform.rotation);
 					if (!model.hasMalus) {
 						model.hasMalus = true;
 						model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
-					
 						applyEffect ();
 						Destroy (other.gameObject);
 					}

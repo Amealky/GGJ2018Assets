@@ -44,7 +44,7 @@ public class PersonnageModel : MonoBehaviour {
 
 	public float numeroJoueur = 1;
 
-
+	public GameObject impactParticule;
 	//Zak
 	//Zak
 
