@@ -177,13 +177,13 @@ public class PersonnageController : MonoBehaviour {
 	void shoot(){
 		if (model.fireRate == 0) {
 			this.instatiateTir ();
-			Debug.Log ("Gogo");
+		
 
 		} else {
 			if(Time.time > model.timeToFire){
 				model.timeToFire = Time.time + 1 / model.fireRate;
 				this.instatiateTir();
-				Debug.Log ("Gogo");
+			
 
 			}
 		}
@@ -209,7 +209,8 @@ public class PersonnageController : MonoBehaviour {
 	}
 	void instatiateTir(){
 		//Debug.Log (model.tir);
-		model.tir.direction = (int) transform.localScale.x;
+		//model.tir.direction = (int) -transform.localScale.x;
+		model.tir.directionXY = new Vector3(-gameObject.transform.position.x + transform.localScale.x, 0, 0);
 		Instantiate (model.tir, model.shootPoint.position, model.shootPoint.rotation);
 	}
 

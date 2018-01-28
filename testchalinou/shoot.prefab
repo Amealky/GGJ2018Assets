@@ -120,8 +120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: -10
-  directionXY: {x: 10, y: 0, z: 0}
-  speed: 20
+  directionXY: {x: 127.39401, y: 0, z: 0}
+  speed: 5
   bulletDamage: 5
   bounsCount: 0
   maxBouns: 0
