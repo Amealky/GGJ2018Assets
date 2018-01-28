@@ -12,7 +12,7 @@ public class Tir : MonoBehaviour {
 	public int 	 maxBouns;
 	// Use this for initialization
 	void Start () {
-		speed = 0.5f;
+		speed = 0.25f;
 		bounsCount 	= 0 ;
 		maxBouns 	= 2 ;
 		directionXY = new Vector3(direction, 0, 0);
