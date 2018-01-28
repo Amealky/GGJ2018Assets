@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class Tir : MonoBehaviour {
 
-	public int direction;
 	public Vector3 directionXY;
 	public float speed;
 	public float bulletDamage;
 	public int 	 bounsCount;
 	public int 	 maxBouns;
+
+	void Awake(){
+
+	}
 	// Use this for initialization
 	void Start () {
-		speed = 0.25f;
+		speed = 0.05f;
 		bounsCount 	= 0 ;
 		maxBouns 	= 2 ;
 		//directionXY = new Vector3(direction, 0, 0);

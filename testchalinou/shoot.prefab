@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 114997615338345564}
   - component: {fileID: 61987385733709456}
   - component: {fileID: 50003896230569190}
+  - component: {fileID: 114826569772156616}
   m_Layer: 0
   m_Name: shoot
-  m_TagString: Untagged
+  m_TagString: BonusThrowed
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,6 +109,22 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.2, y: 0.2}
+--- !u!114 &114826569772156616
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1344317643083866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 077cba517acd06b42a29bd8532d82d87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  speedAffection: 0
+  isMalus: 0
+  isBonus: 1
+  direction: 1
 --- !u!114 &114997615338345564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,9 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd1c93e3f868cb44a9653b201228e11e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: -10
-  directionXY: {x: 127.39401, y: 0, z: 0}
-  speed: 5
+  directionXY: {x: -51.296543, y: 0, z: 0}
+  speed: 0.1
   bulletDamage: 5
   bounsCount: 0
   maxBouns: 0

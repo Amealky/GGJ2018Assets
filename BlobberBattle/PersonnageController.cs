@@ -24,12 +24,14 @@ public class PersonnageController : MonoBehaviour {
 
     void Awake(){
 		model = this.gameObject.GetComponent<PersonnageModel> ();
-		model.tir = this.gameObject.GetComponent<Tir> ();
+		//model.tir = this.gameObject.GetComponent<Tir> ();
 	}
 
 	// Use this for initialization
 
 	void Start () {
+		model.timeBeforeGetWell = 5.0f;
+		model.timeBeforeGetFucked = 5.0f;
 		model.sprite = this.gameObject.GetComponent<SpriteRenderer> ();
 		model.shootPoint = transform.Find ("ShootPoint");
 		// model.power = this.gameObject.GetComponent<Power> ();
@@ -66,22 +68,7 @@ public class PersonnageController : MonoBehaviour {
 				transform.position = Vector2.Lerp (transform.position, temp, Time.fixedDeltaTime);
 
 			}
-			/*	model.hasMalus = true;
 
-		// float translation = model.hasBonus ?  Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed ) : ( Time.deltaTime * model.moveSpeed ) ;
-		if(model.hasBonus && !model.hasMalus){
-			translation = Time.deltaTime * ( model.moveSpeed + model.bonusMooveSpeed );
-		}else if(!model.hasBonus && model.hasMalus){
-			 translation = Time.deltaTime * ( model.moveSpeed - model.malusMooveSpeed );
-		}else if(!model.hasBonus && !model.hasMalus){
-			 translation = Time.deltaTime * model.moveSpeed;
-		}else if(model.hasBonus && model.hasMalus){
-			// Si le joueur a un bonus ET un malus il devien fouuuu ! Il pete un cable genre il bouge cheloument et tout (cest une idee hein)
-			Debug.Log(Random.value > 0.5f );
-			translation = Time.deltaTime * ( model.moveSpeed + Random.Range(-10, 15) );
-			 // translation =  Random.value > 0.5f ? Time.deltaTime * ( model.moveSpeed - 15 ) : Time.deltaTime * ( model.moveSpeed + 9 );
-		}
-*/
 
 			if (model.isMoving && !model.isAttacking) {
 				model.anim.Play ("P" + model.numeroJoueur + "Marche");
@@ -166,12 +153,14 @@ public class PersonnageController : MonoBehaviour {
 		if(model.hasBonus){
 			
 			model.power.direction = (int) transform.localScale.x;
-			Vector3 instantiatePosition = new Vector3(gameObject.name == "Joueur1" ? model.shootPoint.position.x+5 : model.shootPoint.position.x-5, model.shootPoint.position.y, model.shootPoint.position.z);
-			Instantiate (model.power, instantiatePosition, model.shootPoint.rotation);
+			Instantiate (model.power, model.shootPoint.position, model.shootPoint.rotation);
 			model.power 	= null;
 			model.hasBonus 	= false;
-			model.moveSpeed -= model.speedAffection;
+
+			//applyEffect()
+		//	model.moveSpeed -= model.speedAffection;
 		}
+
 	}
 
 	void shoot(){
@@ -206,11 +195,14 @@ public class PersonnageController : MonoBehaviour {
 			transform.position = initialPositionJ2;
 		}
 		model.life--;
+		model.percentage = 0;
+		model.hasBonus = false;
+		model.hasMalus = false;
 	}
 	void instatiateTir(){
 		//Debug.Log (model.tir);
 		//model.tir.direction = (int) -transform.localScale.x;
-		model.tir.directionXY = new Vector3(-gameObject.transform.position.x + transform.localScale.x, 0, 0);
+		model.tir.directionXY = new Vector3(-gameObject.transform.position.x + (transform.localScale.x /10) , 0, 0);
 		Instantiate (model.tir, model.shootPoint.position, model.shootPoint.rotation);
 	}
 
@@ -257,13 +249,16 @@ public class PersonnageController : MonoBehaviour {
 
         if (other.gameObject.tag == "Bonus"){
 			Debug.Log("Bonus ramaser");
-            pickUpBonus();
-			model.speedAffection = other.GetComponent<BonusScript> ().speed;
-			applyEffect ();
+			if (!model.hasBonus) {
+				pickUpBonus();
+				model.speedAffection = other.GetComponent<BonusScript> ().speed;
+				applyEffect ();
+			}
+   
 		}
         if (other.gameObject.tag == "Vide")
         {
-			
+				
             Debug.Log("vide!");
 			model.anim.Play ("P" + model.numeroJoueur + "Mort");
 			model.isDying = true;
@@ -291,12 +286,20 @@ public class PersonnageController : MonoBehaviour {
 			model.isCollideBottom = true;  
         }
 
-        if (other.gameObject.tag == "BonusThrowed") {
-			Debug.Log ("ThrowedTag");
-			model.hasMalus = true;
-			model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
-			applyEffect ();
-			Destroy (other.gameObject);
+		if (!model.isDying) {
+			if (other.gameObject.tag == "BonusThrowed") {
+			
+				
+
+					
+				model.hasMalus = true;
+				model.speedAffection = other.GetComponent<BonusThrowedScript> ().speedAffection;
+				applyEffect ();
+				Destroy (other.gameObject);
+			
+
+
+			}
 		}
 
 
@@ -353,7 +356,7 @@ public class PersonnageController : MonoBehaviour {
 		if (!model.hasMalus && !model.hasBonus) {
 			model.moveSpeed = model.speedBase;
 			Debug.Log ("Fin de malus");
-			model.sprite.color = Color.clear;
+			model.sprite.color = Color.white;
 		}
 
 
