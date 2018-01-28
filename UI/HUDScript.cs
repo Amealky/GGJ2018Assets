@@ -64,12 +64,12 @@ public class HUDScript : MonoBehaviour {
 		if(GameObject.Find("Joueur1") != null){
 			PersonnageController Script1 = GameObject.Find("Joueur1").GetComponent<PersonnageController>();
 			Player1HasBonus.active = Script1.getModel().hasBonus;
-			// Player1TimeBeforeGetFucked.GetComponent<UnityEngine.UI.Text>().text = Script1.getModel().timeBeforeGetFucked+""; 
+			Player1TimeBeforeGetFucked.GetComponent<UnityEngine.UI.Text>().text = Script1.getModel().timeBeforeGetFucked+""; 
 		}
 		if(GameObject.Find("Joueur2") != null){
 			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
 			Player2HasBonus.active = Script2.getModel().hasBonus;
-			// Player2TimeBeforeGetFucked.GetComponent<UnityEngine.UI.Text>().text = Script2.getModel().timeBeforeGetFucked+""; 
+			Player2TimeBeforeGetFucked.GetComponent<UnityEngine.UI.Text>().text = Script2.getModel().timeBeforeGetFucked+""; 
 		}
 	}
 
