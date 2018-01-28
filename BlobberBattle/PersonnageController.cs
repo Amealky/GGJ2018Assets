@@ -23,6 +23,7 @@ public class PersonnageController : MonoBehaviour {
     private AudioSource source;
     private float volumecourtedistance = .5f;
     private float volumelonguedistance = 1.0f;
+
 	private bool isLooser = false;
 
     void Awake(){
@@ -183,7 +184,9 @@ public class PersonnageController : MonoBehaviour {
 	void throwPower(){
     
 		if(model.hasBonus){
-			
+
+			AudioSource.PlayClipAtPoint(tirSpeciaux, transform.position);
+
 			model.power.direction = (int) transform.localScale.x;
 			Vector3 powerPosition = new Vector3( model.numeroJoueur == 1 ? model.shootPoint.position.x+5 : model.shootPoint.position.x-5  , model.shootPoint.position.y , model.shootPoint.position.z); 
 			Instantiate (model.power, powerPosition, model.shootPoint.rotation);
@@ -197,6 +200,7 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void shoot(){
+		AudioSource.PlayClipAtPoint(tirNormal, transform.position);
 		if (model.fireRate == 0) {
 			this.instatiateTir ();
 		
@@ -294,8 +298,8 @@ public class PersonnageController : MonoBehaviour {
 
 			if (other.gameObject.tag == "Vide")
 			{
-
-				Debug.Log("vide!");
+				Debug.Log ("tombe dans le vide");
+				AudioSource.PlayClipAtPoint(Mort, transform.position);
 				model.anim.Play ("P" + model.numeroJoueur + "Mort");
 				model.isDying = true;
 			}
