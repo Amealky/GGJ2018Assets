@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class PersonnageController : MonoBehaviour {
@@ -60,7 +61,7 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 	
 		Debug.Log ("model.isDying"+model.isDying);
 		if (!model.isDying) {
@@ -70,9 +71,11 @@ public class PersonnageController : MonoBehaviour {
 				if (model.numeroJoueur == 1) {
 					redWin [0].SetActive (true);
 				} else {
-					bleuWin[0].SetActive(true);
+					bleuWin [0].SetActive (true);
 
 				}
+			
+			
 
 			}
 			if (!isLooser) {
@@ -164,8 +167,16 @@ public class PersonnageController : MonoBehaviour {
 				}
 
 			}
+			else if(isLooser) {
+				Debug.Log ("quit");
+				if(Input.GetButton("ButtonA")){
+					SceneManager.LoadScene("Ui");
+				}
 
-		}
+			}
+
+
+		} 
 			
 	}
 
