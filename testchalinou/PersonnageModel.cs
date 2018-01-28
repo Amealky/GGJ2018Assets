@@ -26,6 +26,8 @@ public class PersonnageModel : MonoBehaviour {
 	public Animator anim { get; set; }
 	public float speedBase = 3.5f;
 	public bool isDying = false;
+	public float timeBeforeGetFucked;
+	public float timeBeforeGetWell;
 
 	public float recul = 0.5f;
 	public bool isShot = false;

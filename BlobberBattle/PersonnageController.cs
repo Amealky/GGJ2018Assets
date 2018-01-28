@@ -190,6 +190,7 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void endShoot(){
+
 		model.isAttacking = false;
 	}
 
@@ -336,22 +337,22 @@ public class PersonnageController : MonoBehaviour {
 	void applyEffect(){
 		if (model.hasBonus) {
 			model.moveSpeed += model.speedAffection;
-			StartCoroutine (LoadChangeBonusToMalus (5.0f));
-			model.sprite.color = Color.green;
+			StartCoroutine (LoadChangeBonusToMalus (model.timeBeforeGetFucked));
+			model.sprite.color = Color.yellow;
 			Debug.Log ("Bonus");
 		} 
 
 		if(model.hasMalus){
 			model.moveSpeed -= model.speedAffection;
-			StartCoroutine (LoadEndMalus (5.0f));
-			model.sprite.color = Color.red;
+			StartCoroutine (LoadEndMalus (model.timeBeforeGetWell));
+			model.sprite.color = Color.green;
 			Debug.Log ("Malus");
 		}
 
 		if (!model.hasMalus && !model.hasBonus) {
 			model.moveSpeed = model.speedBase;
 			Debug.Log ("Fin de malus");
-			model.sprite.color = Color.white;
+			model.sprite.color = Color.clear;
 		}
 
 
