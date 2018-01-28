@@ -11,6 +11,12 @@ public class HUDScript : MonoBehaviour {
 	private GameObject Player1HasMalus;
 	private GameObject Player2HasMalus;
 
+
+	private GameObject Player1LifesLeft;
+	private GameObject Player2LifesLeft;
+
+
+
 	private GameObject Player1TimeBeforeGetFucked;
 	private GameObject Player2TimeBeforeGetFucked;
 	private string PlayerName;
@@ -20,12 +26,16 @@ public class HUDScript : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		PlayerName	= "Perso";
+		Player1LifesLeft 	= GameObject.Find("Player1LifesLeft");
+		Player2LifesLeft 	= GameObject.Find("Player2LifesLeft");
+
 		Player1Percentage 	= GameObject.Find("Player1Percentage");
 		Player2Percentage 	= GameObject.Find("Player2Percentage");
 		Player1HasBonus 	= GameObject.Find("Player1HasBonus");
 		Player2HasBonus 	= GameObject.Find("Player2HasBonus");
 		Player1HasMalus 	= GameObject.Find("Player1HasMalus");
 		Player2HasMalus 	= GameObject.Find("Player2HasMalus");
+
 		Player1TimeBeforeGetFucked 	= GameObject.Find("Player1TimeBeforeGetFucked");
 		Player2TimeBeforeGetFucked 	= GameObject.Find("Player2TimeBeforeGetFucked");
 	}
@@ -35,8 +45,20 @@ public class HUDScript : MonoBehaviour {
 		updateBonusUI();
 		updatePercentageUI();
 		updateMalusUI();
+		updateLifeleft();
 	}
 
+	void updateLifeleft(){
+		if(GameObject.Find("Joueur1") != null){
+			PersonnageController Script1 = GameObject.Find("Joueur1").GetComponent<PersonnageController>();
+			Player1LifesLeft.GetComponent<UnityEngine.UI.Text>().text = Script1.getModel().life + "";	
+		}
+	
+		if(GameObject.Find("Joueur2") != null){
+			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
+			Player2LifesLeft.GetComponent<UnityEngine.UI.Text>().text = Script2.getModel().life + "";
+		}
+	}
 
 	void updatePercentageUI(){
 		if(GameObject.Find("Joueur1") != null){
