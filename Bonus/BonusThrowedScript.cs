@@ -5,6 +5,7 @@ using UnityEngine;
 public class BonusThrowedScript : MonoBehaviour {
 
 	public int speed = 10;
+	public int speedAffection = 0;
 	public bool isMalus = false;
 	public bool isBonus = true;
 	public int direction = 1;

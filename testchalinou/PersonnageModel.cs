@@ -5,8 +5,7 @@ using UnityEngine;
 public class PersonnageModel : MonoBehaviour {
 
 	//Zak
-	public float bonusMooveSpeed;
-	public float malusMooveSpeed;
+
 	//Zak
 	public float percentage = 1;
 	public float attackSpeed;
@@ -25,6 +24,7 @@ public class PersonnageModel : MonoBehaviour {
 	public float timeToFire = 0;
 	public float damage = 5;
 	public Animator anim { get; set; }
+	public float speedBase = 3.5f;
 
 	public float recul = 0.5f;
 	public bool isShot = false;
@@ -32,6 +32,12 @@ public class PersonnageModel : MonoBehaviour {
 	public float timeSaved { get; set;}
 	public float deltime { get; set;}
 	public float animationTime = 0.5f;
+	public float speedAffection = 0;
+
+	public bool isCollideTop;
+	public bool isCollideBottom;
+	public bool isCollideLeft;
+	public bool isCollideRight;
 
 	public float numeroJoueur = 1;
 
