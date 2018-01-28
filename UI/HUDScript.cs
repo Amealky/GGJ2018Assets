@@ -10,6 +10,9 @@ public class HUDScript : MonoBehaviour {
 	private GameObject Player2HasBonus;
 	private GameObject Player1HasMalus;
 	private GameObject Player2HasMalus;
+
+	private GameObject Player1TimeBeforeGetFucked;
+	private GameObject Player2TimeBeforeGetFucked;
 	private string PlayerName;
 	private float lastPercentagePlayer1;
 	private float lastPercentagePlayer2;
@@ -23,6 +26,8 @@ public class HUDScript : MonoBehaviour {
 		Player2HasBonus 	= GameObject.Find("Player2HasBonus");
 		Player1HasMalus 	= GameObject.Find("Player1HasMalus");
 		Player2HasMalus 	= GameObject.Find("Player2HasMalus");
+		Player1TimeBeforeGetFucked 	= GameObject.Find("Player1TimeBeforeGetFucked");
+		Player2TimeBeforeGetFucked 	= GameObject.Find("Player2TimeBeforeGetFucked");
 	}
 	
 	// Update is called once per frame
@@ -59,10 +64,12 @@ public class HUDScript : MonoBehaviour {
 		if(GameObject.Find("Joueur1") != null){
 			PersonnageController Script1 = GameObject.Find("Joueur1").GetComponent<PersonnageController>();
 			Player1HasBonus.active = Script1.getModel().hasBonus;
+			// Player1TimeBeforeGetFucked.GetComponent<UnityEngine.UI.Text>().text = Script1.getModel().timeBeforeGetFucked+""; 
 		}
 		if(GameObject.Find("Joueur2") != null){
 			PersonnageController Script2 = GameObject.Find("Joueur2").GetComponent<PersonnageController>();
 			Player2HasBonus.active = Script2.getModel().hasBonus;
+			// Player2TimeBeforeGetFucked.GetComponent<UnityEngine.UI.Text>().text = Script2.getModel().timeBeforeGetFucked+""; 
 		}
 	}
 
