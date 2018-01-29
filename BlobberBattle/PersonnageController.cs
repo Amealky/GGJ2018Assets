@@ -36,8 +36,10 @@ public class PersonnageController : MonoBehaviour {
 	// Use this for initialization
 
 	void Start () {
-		model.timeBeforeGetWell = 5.0f;
-		model.timeBeforeGetFucked = 5.0f;
+		model.lastTimePickedUpBonus 	= -20 ;
+		model.timeLeftBeforeGetFucked 	= 0f;
+		model.timeBeforeGetWell 		= 5.0f;
+		model.timeBeforeGetFucked 		= 5.0f;
 		model.sprite = this.gameObject.GetComponent<SpriteRenderer> ();
 		model.shootPoint = transform.Find ("ShootPoint");
 		// model.power = this.gameObject.GetComponent<Power> ();
@@ -62,7 +64,8 @@ public class PersonnageController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+
+		model.timeLeftBeforeGetFucked 	=  System.Math.Round(model.timeBeforeGetFucked - ( Time.time - model.lastTimePickedUpBonus ), 2);
 	
 		Debug.Log ("model.isDying"+model.isDying);
 		if (!model.isDying) {
@@ -287,8 +290,8 @@ public class PersonnageController : MonoBehaviour {
 
 		if (model.isDying != true ) {
 	        if (other.gameObject.tag == "Bonus"){
-				Debug.Log("Bonus ramaser");
 				if (!model.hasBonus) {
+					Debug.Log("Bonus ramaser");
 					pickUpBonus();
 					model.speedAffection = other.GetComponent<BonusScript> ().speed;
 					applyEffect ();
@@ -358,7 +361,8 @@ public class PersonnageController : MonoBehaviour {
 	}
 
 	void pickUpBonus(){
-		model.hasBonus = true;
+		model.lastTimePickedUpBonus 	= Time.time;
+		model.hasBonus 					= true;
 	}
 
 	IEnumerator LoadChangeBonusToMalus(float temps){

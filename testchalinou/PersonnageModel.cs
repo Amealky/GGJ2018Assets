@@ -15,6 +15,7 @@ public class PersonnageModel : MonoBehaviour {
 	public bool hasBonus;
 	public bool hasMalus { get; set;}
 	public bool isShooting { get; set;}
+	public float lastTimePickedUpBonus; // le temp quil etait la dernier fois quon a ramassee un bonus 
 	public BonusThrowedScript power;
 	public Tir tir;
 	public bool isMoving  { get; set;}
@@ -27,6 +28,7 @@ public class PersonnageModel : MonoBehaviour {
 	public Animator anim { get; set; }
 	public bool isDying = false;
 	public float timeBeforeGetFucked;
+	public double timeLeftBeforeGetFucked;
 	public float timeBeforeGetWell;
 
 	public float recul = 0.01f;
